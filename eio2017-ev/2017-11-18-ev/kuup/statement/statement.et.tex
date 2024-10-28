@@ -1,0 +1,38 @@
+% Idee: Heno Ivanov
+% Tekst: Heno Ivanov
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+\usepackage{wrapfig}
+\begin{document}
+
+\begin{ol}{\eio}{\ev 18.11.2017}{\yle}{}
+\begin{yl}{4}{Kuubi kleepimine}{kuup}{1 sek}{50 punkti}
+
+Jukul on vaja valmistada paberist kuup. Paberile on juba joonestatud $10 \times 10$ ruudustik, mille alumise vasaku ruudu koordinaadid on $(1,1)$ ja ülemise parema omad $(10,10)$. Juku valib 6 paarikaupa erinevat ruutu.
+
+Kontollida, kas valitud ruutudest on võimalik kokku voltida kuup (lõigata ja voltida tohib ainult mööda olemasolevaid jooni).
+
+Lisaks leida, milliste ruutude servadesse tuleks jätta kleepimiseks ribad. Kahest omavahel kokkupuutuvast lõikeservast tuleb riba jätta täpsele ühele. Ribad võivad asuda ka ruudustiku servas.
+
+\sis Tekstifail \sisf sisaldab täpselt 6 rida, igal real kaks tühikuga eraldatud täisarvu: Juku valitud ruutude koordinaadid $x_i$ ja $y_i$ ($1 \le x_i \le 10$, $1 \le y_i \le 10$).
+
+\val Tekstifaili \valf esimesele reale väljastada \verb'JAH', kui Juku valitud ruutude välja\-lõikamisel moodustub (sidus) kujund, millest on võimalik kokku voltida kuup, vastasel juhul \verb'EI'. Kui kuubi voltimine on võimalik, väljastada järmistele ridadele programmi poolt leitud kleepimis\-ribade asukohad: tühikutega erladatult ruudu X- ja Y-koordinaadid ning suund (\verb'N' --- üles, \verb'E' --- paremale, \verb'S' --- alla, \verb'W' --- vasakule).
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+\vspace{-10pt}
+\joon{0}
+\vspace{+10pt}
+\joon{1}
+\vspace{-10pt}
+\end{wrapfigure}
+
+\nde[0]{3cm}{3cm}
+
+\nde[1]{3cm}{3cm}
+
+\hnd Selles ülesandes on testid jagatud gruppidesse. Igas grupis saab 50\% punktidest programm, mis annab kõigis selle grupi testides korrektse \verb'JAH'/\verb'EI' vastuse. Ülejäänud 50\% saab kleepimis\-ribade asukohtade eest.
+
+\end{yl}
+\end{ol}
+\end{document}

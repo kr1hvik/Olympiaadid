@@ -1,0 +1,16 @@
+0 - näide
+1 - N = 0, H = 0, minimaalne test
+2 - N = 5, H = 0, rangelt allamäge
+3 - N = 7, H = 0, allamäge ja horisontaalsed lõigud
+4 - N = 9, H = 4, suurim tõus raja keskel
+5 - N = 9, H = 3, suurim tõus raja alguses
+6 - N = 9, H = 3, suurim tõus raja lõpus
+7 - N = 7, H = 6, rangelt ülesmäge
+8 - N = 9, H = 4, kaks võrdset tõusu, nende vahel langus
+9 - N = 9, H = 6, kaks võrdset tõusu, nende vahel tasane lõik
+10 - N = 50, H = 86, väike juhuslik test (gen1 50 100)
+11 - N = 2000, H = 91, keskmise suurusega test, üks juhuslik 25 punktiga lõik (gen1 25 100) kordub
+12 - N = 5000, H = 897, pikk lauge tõus (gen2 5000 10000)
+13 - N = 20000, H = 999921, suur juhuslik test (gen3 200 100 1000000)
+14 - N = 30000, H = 999825, suur juhuslik test (gen3 150 200 1000000)
+15 - N = 50000, H = 999526, maksimaalse suurusega juhuslik test (gen3 100 500 1000000)

@@ -1,0 +1,6 @@
+Test 0: näidis
+Testid 1...5: 1. alamülesanne (15 punkti)
+Testid 6...10: 2. alamülesanne (15 punkti)
+Testid 11...19: 3. alamülesanne (30 punkti)
+
+Alamülesanded võiksid olla batchitud testidega

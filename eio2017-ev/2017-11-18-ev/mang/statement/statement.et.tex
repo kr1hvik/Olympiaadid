@@ -1,0 +1,28 @@
+% Idee: Oliver-Matis Lill
+% Tekst: Oliver-Matis Lill
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+\begin{document}
+
+\begin{ol}{\eio}{\ev 18.11.2017}{\yle}{}
+\begin{yl}{3}{Lauamäng}{mang}{1 sekund}{40 punkti}
+
+Sa said hiljuti kingituseks lauamängu, mis on nagu Tsirkus, aga tsükliline.
+
+Mängulaual on $N$ järjestatud ruutu $1, \ldots, N$, kusjuures ruudule $N$ järgneb ruut $1$. Igale ruudule $i$ on märgitud mingi täisarv $a_i$. Kui $a_i = 0$, siis ruudul $i$ olles peab mängija viskama kuuetahulist täringut ja liikuma saadud tulemuse võrra edasi. Kui $a_i \ne 0$, peab mängija liikuma $a_i$ võrra edasi (tagasi, kui $a_i$ on negatiivne); see kordub, kuni mängija jõuab ruudule, millel on kirjas $0$ (aga on võimalik sattuda ka lõpmatusse tsüklisse). Mäng algab ruudult $1$ ja on teada, et $a_1 = 0$.
+
+Mängu vaadates tekkis Sul kahtlus, et on ruute, kuhu ei olegi võimalik kunagi sattuda. Kirjuta programm, mis leiab, milliseid ruute on võimalik mängu jooksul külastada.
+
+\sis Tekstifaili \sisf esimesel real on mängulaua ruutude arv $N$ ($1 \le N \le 1000$).
+Teisel real on $N$ tühikutega eraldatud täisarvu $a_1, \ldots, a_N$ ($-N < a_i < N$, $a_1 = 0$).
+
+\val Tekstifaili \valf ainsale reale väljastada $N$ tühikutega eraldatud arvu $0$ või $1$. Positsioonil $i$ olev arv $1$ tähendab, et laua ruudule $i$ on võimalik sattuda, ja arv $0$, et sinna ei ole võimalik sattuda.
+
+\nde[0]{5cm}{5cm}
+
+\nde[1]{5cm}{5cm}
+
+\end{yl}
+\end{ol}
+\end{document}

@@ -1,0 +1,31 @@
+% Idee: Ahto Truu
+% Tekst: Ahto Truu
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+\begin{document}
+
+\begin{ol}{\eio}{\ev 18.11.2017}{\yle}{}
+\begin{yl}{1}{Maksimaalne tõus}{tous}{1 sekund}{20 punkti}
+
+Nii suusa- kui jooksu- kui rattamaratonide üks tähtsamaid iseloomustajaid on raja kõrgusprofiil ja eriti selle maksimaalne tõus.
+
+Raja kõrgusprofiil annab $N$ rajapunkti kõrgused $H_1$, $H_2$, \dots, $H_N$. Tõusuks nimetatakse sellist järjestikuste punktide jada, kus iga järgmine punkt on eelmisest rangelt kõrgemal. Tõusu kõrguseks nimetatakse selle alguse ja lõpu kõrguste vahet.
+
+Kirjutada programm, mis leiab antud rajaprofiilis maksimaalse tõusu kõrguse.
+
+\sis Tekstifaili \sisf esimesel real on rajaprofiili punktide arv $N$ ($1 \le N \le 50\,000$) ja järgmisel $N$ real punktide täisarvulised kõrgused $H_i$ ($0 \le H_i \le 1\,000\,000$) järjestatuna stardist finiši suunas.
+
+\val Tekstifaili \valf ainsale reale väljastada üks täisarv: maksimaalne tõusu kõrgus sisendis antud rajaprofiilis, see tähendab maksimaalne kõrguste vahe $H_i - H_j$, kus $j \le i$ ja $H_j < H_{j+1} < \dots < H_{i-1} < H_i$. Kui rajal pole ühtki tõusu (haha :), siis väljastada vastusena 0.
+
+\nde[0]{3cm}{3cm}
+
+Näites toodud rajaprofiilis on kaks tõusu, üks kõrgusega 2 ja teine kõrgusega 3:
+
+\joon{0}
+
+\hnd Testides koguväärtusega 10 punkti kehtib lisaks tingimus $N \le 50$.
+
+\end{yl}
+\end{ol}
+\end{document}
