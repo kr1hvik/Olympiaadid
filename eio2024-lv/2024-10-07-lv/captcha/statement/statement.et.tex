@@ -1,0 +1,54 @@
+% Idee: Heno Ivanov
+% Tekst: Targo Tennisberg
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+
+\begin{ol}{\eio}{\lv 07.--13.10.2024}{\yle}{}
+  \begin{yl}{2}{Viie pildiga robotilõks}{captcha}{1 sekund}{30 punkti}
+    Juku tahab minna veebisaidile, mis näitab talle viie pildiga robotilõksu ehk \textit{captcha}t.
+    Saidile sissepääsemiseks peab Juku klõpsima kõiki pilte täpselt õiges järjekorras.
+    Iga klõpsuga tekib pildi juurde number ($1, 2, \ldots$).
+    Kui juba märgitud pilti uuesti klõpsata, kaob number ära ning kõik sellest suuremad numbrid muutuvad ühe võrra väiksemaks.
+
+    Enne kui Juku jõuab midagi klõpsata, kutsub ema ta arvuti juurest ära. Naastes näeb Juku, et tema väikevend on juba erinevaid pilte klõpsinud.
+
+    Leia, kuidas Juku saaks nüüd robotilõksu minimaalse klõpsude arvuga läbida.
+
+    \sis Sisendi esimesel viiel real on igaühel $1$ kuni $10$ ladina suurtähtest koosnev sõne: piltide nimed selles järjekorras, milles neid tuleks klõpsida. Kõik viis sõnet on erinevad.
+
+    Järgmisel real on täisarv $N$ ($0 \le N \le 10$): väikevenna tehtud klõpsude arv.
+
+    Lõpuks on $N$ real igaühel üks sõne: nende piltide nimed, mida vend klõpsis (nende klõpsimise järjekorras).
+
+    \val Väljundi esimesele reale kirjutada täisarv $M$: minimaalne klõpsude arv, mille Juku peab tegema.
+
+    Järgmisele $M$ reale kirjutada nende piltide nimed, mida Juku peab klõpsima. Kui võimalusi on mitu, võib väljastada ükskõik millise neist.
+
+    \nde[0]{3cm}{3cm}
+
+    Saidile pääsemiseks on vaja saada piltide juurde järgmised numbrid: \verb/KOER/ --- $1$, \verb/PORGAND/ --- $2$, \verb/AUTO/ --- $3$, \verb/TROLL/ --- $4$, \verb/PIRN/ --- $5$.
+
+    Väikevenna klõpsimise järel on seis selline: \verb/TROLL/ --- $1$, \verb/KOER/ --- $2$, \verb/PORGAND/ --- $3$, \verb/AUTO/ --- numbrita, \verb/PIRN/ --- numbrita.
+
+    Kui Juku klõpsab pildil \verb/TROLL/, kaob selle number ära ja tulemus on selline: \verb/KOER/ --- $1$, \verb/PORGAND/ --- $2$, \verb/AUTO/ --- numbrita, \verb/PIRN/ --- numbrita, \verb/TROLL/ --- numbrita.
+    Kui Juku klõpsab nüüd piltidel \verb/AUTO/, \verb/TROLL/ ja \verb/PIRN/, saavad need numbrid $3$, $4$ ja $5$ ning Juku pääsebki saidile.
+
+    \clearpage
+    \nde[1]{3cm}{3cm}
+
+    Väikevenna klõpsimise järel on seis selline: \verb/ESIMENE/ --- $1$, \verb/TEINE/ --- $2$, \verb/KOLMAS/ --- numbrita, \verb/NELJAS/ --- numbrita, \verb/VIIES/ --- numbrita.
+
+    \hnd Selles ülesandes antakse punkte iga testi eest eraldi. Testid on jagatud gruppidesse, milles kehtivad järgmised lisatingimused:
+    \begin{xenum}
+      \item (0 punkti) Ülesande tekstis olevad näited. Nende lahendamise eest punkte ei saa.
+      \item (10 punkti) Väikevend tegi \textit{kokku} ülimalt ühe klõpsu.
+      \item (10 punkti) Väikevend klõpsas \textit{iga pilti} ülimalt ühe korra.
+      \item (10 punkti) Lisapiirangud puuduvad.
+    \end{xenum}
+  \end{yl}
+\end{ol}
+
+\end{document}

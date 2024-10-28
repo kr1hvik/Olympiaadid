@@ -1,0 +1,29 @@
+% Idee: Heno Ivanov
+% Tekst: Ahto Truu
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+\begin{ol}{\eio}{\ev 10.12.2023}{\yle}{}
+\begin{yl}{3}{Erinevused}{erinevused}{0,5 sek / 3 sek}{30 punkti}
+
+Juku kooli reaalklassid osalesid informaatikaolümpiaadil. Nüüd analüüsib õpetaja tulemusi ja tahab muu hulgas teada, millises klassis on õpilaste tase kõige ühtlasem ja millises kõige eba\-ühtlasem.
+
+Kahe õpilase tulemuste erinevuse leiab õpetaja, lahutades rohkem punkte saanud õpilase tulemusest vähem punkte saanud õpilase tulemuse. Klassi õpilaste taseme ebaühtluse mõõduks vaatab ta kõiki õpilaste paare, liidab kõigi paaride tulemuste erinevused ja jagab saadud summa paaride arvuga. Summa jagamine paaride arvuga on lihtne, sest see on alati üks tehe. Aga erinevuste summa arvutamine on tülikas ja Juku plaanib loovtööna selleks programmi kirjutada.
+
+Juku ambitsioon on tegelikult laiem, ta tahab luua õpilasfirma ja pakkuda õpilaste tulemuste analüüsi lisaks koolidele ka linnade kaupa. Miljonilinnades on aga sadu tuhandeid õpilasi ja seetõttu peab programm olema piisavalt efektiivne ka suurte andmehulkade töötlemiseks. Aita Jukul selline programm kirjutada!
+
+\sis Sisendi esimesel real on uuritavate õpilaste arv~$N$ ($2 \le N \le 100\,000$). Teisel real on $N$~tühikutega eraldatud täisarvu $A_1, A_2, \ldots, A_N$ ($0 \le A_i \le 1\,000$): õpilaste tulemused.
+
+\val Ainsale reale väljastada sisendis antud tulemuste erinevuste summa.
+
+\nde[0]{3cm}{3cm}
+
+Klassis on 3~õpilast, kes teenisid vastavalt 1, 4 ja 2~punkti. Õpilastest saab moodustada kolm paari. Õpilaste 1 ja 2 tulemuste erinevus on $4-1=3$~punkti. Õpilaste 1 ja 3 tulemuste erinevus on $2-1=1$~punkt. Õpilaste 2 ja 3 tulemuste erinevus on $4-2=2$~punkti. Erinevuste summa on $3+1+2=6$~punkti.
+
+\hnd Testides, mis annavad esimesed 10~punkti, on $N \le 1\,000$. Testides, mis annavad järgmised 10~punkti, on õpilaste tulemused sisendis mittekahanevas järjekorras ($A_1 \le A_2 \le \ldots \le A_N$). Testides, mis annavad viimased 10~punkti, lisatingimusi ei ole.
+
+\end{yl}
+\end{ol}
+\end{document}

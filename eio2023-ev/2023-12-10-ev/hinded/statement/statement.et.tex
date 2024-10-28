@@ -1,0 +1,42 @@
+% Idee: Targo Tennisberg
+% Tekst: Targo Tennisberg
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+\begin{ol}{\eio}{\ev 10.12.2023}{\yle}{}
+\begin{yl}{5}{Hinded}{hinded}{1 sek / 5 sek}{60 punkti}
+
+Juku on koolis teinud hulga kontrolltöid, mida hinnati $0 \ldots 100$ punktiga.
+
+Juku vanaisa annab talle hinnete eest taskuraha. Vanaisa loeb tulemused üle $50$ punkti headeks hinneteks ja tulemused alla $50$ punkti halbadeks hinneteks. Täpsemalt liidab ta hinnete $50$ punkti ületavad osad Juku taskurahale ning lahutab $50$ punkti alla jäävad osad sealt maha. Näiteks hinnete $35$, $42$, $81$ ja $100$ eest saaks Juku kokku $(35-50)+(42-50)+(81-50)+(100-50) = -15-8+31+50 = 58$ eurot. (Täpselt $50$ punktiga hinnatud tööd seega taskuraha ei mõjuta.)
+
+Õpetaja hoiab Juku hindeid $N$ rea ja $N$ veeruga Exceli tabelis. Kokku on Jukul seega $N^2$ hinnet. Juku pääseb tabelile korraks ligi ja tal on võimalus oma hindeid ``parandada'' sel viisil, et ta märgib tabelis ühe ristkülikukujulise alamosa (mis võib olla ka tühi, s.t. sisaldada null elementi) ja kustutab sealt kõik hinded.
+
+Leida, mis on maksimaalne hulk taskuraha, mille Juku võiks sellise kustutamise järel saada.
+
+\sis Sisendi esimesel real on täisarv $N$ ($2 \le N \le 300$): õpetaja tabeli küljepikkus.
+
+Järgmisel $N$ real on igaühel $N$ tühikutega eraldatud täisarvu lõigust $0 \ldots 100$: Juku hinded.
+
+\val Väljundisse kirjutada üks täisarv: Juku maksimaalse taskuraha summa.
+
+\nde[0]{4cm}{3cm}
+
+Juku peaks kustutama hinded $5$, $60$, $60$, $10$ tabeli alumisest paremast osast.
+
+\nde[1]{4cm}{3cm}
+
+Juku peaks kustutama kõik hinded $2$ ja $90$.
+
+\hnd Selles ülesandes on testid jagatud gruppidesse. Iga grupi eest saavad punkte ainult need lahendused, mis läbivad kõik sellesse gruppi kuuluvad testid. Gruppides kehtivad järgmised lisatingimused:
+\begin{xenum}
+\item (10 punkti) $N \le 12$.
+\item (20 punkti) $N \le 80$.
+\item (30 punkti) Lisapiirangud puuduvad.
+\end{xenum}
+
+\end{yl}
+\end{ol}
+\end{document}

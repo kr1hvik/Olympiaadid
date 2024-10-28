@@ -1,0 +1,12 @@
+name: hinded
+title: Hinded
+time_limit: 1
+time_limit_interpreted: 5
+memory_limit: 256
+n_input: 22
+public_testcases: all
+infile: ''
+outfile: ''
+score_type: GroupMin
+score_mode: max_subtask
+divisions: G

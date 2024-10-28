@@ -1,0 +1,11 @@
+name: erinevused
+title: Erinevused
+time_limit: 0.5
+time_limit_interpreted: 3
+memory_limit: 256
+n_input: 10
+public_testcases: all
+infile: ''
+outfile: ''
+score_type: GroupSum
+score_mode: max_subtask

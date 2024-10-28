@@ -1,0 +1,77 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[et]{eio}
+\usepackage{url}
+
+\begin{document}
+\begin{ol}{\eio}{\ev 10.12.2023}{\juh}{}
+
+\section*{Informaatikaolümpiaadi eelvooru võistlusjuhend}
+
+\subsection*{Võistluse korraldus}
+
+\begin{xitem}
+
+\item Võistlus toimub aadressilt \url{https://eio.ee} leitava testimisserveri vahendusel. Seal saavad võistlejad võistlusele registreeruda; sealt saavad nad ülesannete tekstid, sisendi ja väljundi näited ja muud abifailid ning sinna esitavad oma lahendused hindamiseks.
+
+\item Registreerumine ja proovivoor harjutusülesannetega avatakse 27.~{}novembril. Soovitame registreeruda aegsasti enne võistluse algust (varasematel võistlustel registreeritud kontod ei kehti), kontrollida kohe oma kasutajatunnuse ja parooli kehtivust ning tutvuda serveris olevate juhendmaterjalidega.
+
+\item Ülesannete tekstid tehakse võistlejatele kättesaadavaks \textbf{10.~{}detsembril kell~10:00}. Lahenduste vastuvõtt suletakse \textbf{10.~{}detsembril kell 14:00}.
+
+\item \textbf{Ülesannete tekstid antakse kõigile võistlejatele üldjuhul eesti keeles.}
+
+\item Võistluse ajal ei ole lubatud kasutada mitte mingeid abimaterjale, välja arvatud puhas paber märkmete tegemiseks, kasutatava programmeerimissüsteemi standardne abiinfo ja olümpiaadi serveris olevad materjalid. Interneti (välja arvatud olümpiaadi server \url{https://cms.eio.ee}) kasutamine võistluse ajal on keelatud.
+
+\item Võistlejad võivad serveri vahendusel esitada täpsustavaid küsimusi ülesannete tingimuste kohta. Korraldajad võivad keelduda vastamast küsimustele, mille vastus on ülesande tekstis või mis ei ole ülesande lahendamise seisukohalt olulised.
+
+\item \textbf{Põhikooliõpilastel} on 4 ülesannet, mis kõik lähevad arvesse.
+
+\item \textbf{Gümnaasiumiõpilastel} on 6 ülesannet, millest läheb arvesse iga osaleja 3 parimat skoori.
+
+\end{xitem}
+
+\subsection*{Nõuded programmidele}
+
+\begin{xitem}
+
+\item Iga ülesande lahendus peab olema tervenisti ühes failis. Lisaks selles failis olevale tekstile võib kasutada ainult programmikeele standardvahendeid. Võistluse ametlikud programmikeeled on C++ ja Python.
+
+  \begin{xitem}
+
+  \item Mitte kasutada programmi tekstis (ka kommentaarides) ``täpitähti''. Nende esitus sõltub süsteemi seadetest, mis võivad serveris olla erinevad võistlejate tööarvutite omadest. See võib põhjustada vigu lahenduste hindamisel.
+
+  \item Java programmis peab \verb'main' meetodit sisaldav klass olema ülesande lühinimega (näiteks kui ülesande nimi on ``Sortimine (sort)'', siis peab klassi nimi olema \verb'sort', samamoodi väiketähtedega). Lisaks ei tohi programmis kasutada võtmesõna \verb'package' ja failis ei tohi olla ühtegi teist \verb'public' nähtavusega klassi. Vastasel korral ei võta testimissüsteem lahendust vastu.
+
+  \end{xitem}
+
+\item Programm peab lugema andmed \textbf{standardsisendist} ja väljastama vastuse \textbf{standardväljundisse}; veaväljundit testimisel ei arvestata.
+
+  \begin{xitem}
+
+  \item Programm ei pea kontrollima sisendandmete vastavust ülesande tekstis antud tingimustele; testimiseks kasutatakse ainult korrektseid algandmeid.
+
+  \item Sisendi kõik read (ka viimane) lõpevad reavahetusega.
+
+  \item Programm peab väljastama vastuse täpselt ülesande tekstis kirjeldatud kujul.
+
+  \item 64-bitiste arvude väljastamine C ja C++ programmides: \url{http://eio.ut.ee/KKK/Int64}.
+
+  \end{xitem}
+
+\item Hinnatakse ainult programmi töö tulemust, mitte programmi teksti, kui ülesande tingimustes pole öeldud teisiti.
+
+\item Programm peab lõpetama oma töö ettenähtud aja jooksul.
+
+  \begin{xitem}
+
+  \item  Kui ülesande tekstis on antud kaks ajalimiiti, kehtib esimene kompileeritavates keeltes (C++, C, Java, \ldots) ja teine interpreteeritavates keeltes (Python, JavaScript, \ldots) lahendustele. Kui tekstis on antud üks ajalimiit, kehtib see kõigile lahendustele.
+
+  \item Lahendusi testitakse keskkonnas, mis vastab 1{,}5~GHz Pentium~IV protsessori jõudlusele.
+
+  \end{xitem}
+
+\item Programmil on lubatud kasutada kuni 256~MB mälu, kui ülesande tingimustes pole öeldud teisiti.
+
+\end{xitem}
+
+\end{ol}
+\end{document}

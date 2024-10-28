@@ -1,0 +1,116 @@
+\begin{yl}{7}{Ühetaoline tööaeg}{konstant}{5 sek / 10 sek}{100 punkti}
+  \emph{Idee, teostus ja lahenduse selgitus: P. Randla}
+
+  Antud ülesanne on üks vähestest Eesti informaatikaolümpiaadi ülesannetest, kus on kasutatud IOI-stiilis funktsioonidega sisendit-väljundit (tavaliselt on neid Eesti võistlustest vaid IOI valikvõistlustel). Seetõttu oli paljudel võistlejatel raskusi üldse mingisuguse lahenduse esitamisega.
+
+  Edasised probleemid olid juba rohkem lahendamisega seotud: prooviti võtta alamülesande standardne lahendus ja seda mudida, et see \verb'secret_int'idega töötaks. Tihti tähendab see, et asjad, mis originaalses lahenduses võtsid ühe ``sammu'', võtavad nüüd $N$ sammu, kus $N$ on sisendi või mingi andmestruktuuri suurus. Seega võib niimoodi naiivselt tõlkimine programmi liiga aeglaseks muuta.
+
+  Siin on toodud C++ lahendused, analoogsed Pythoni lahendused on toodud \verb'solution' kaustas.
+
+  \textbf{Lisaväljakutse:} Ülesande tekstis on möödaminnes mainitud, et ka korrutamine ja biti\-nihu\-ta\-mine võivad olla varieeruva tööajaga. Kõik alamülesanded on võimalik lahendada ka ilma ühegi korrutamiseta, ning kasutades bitinihkeid vaid nii, et salajane argument on alati vasakpoolne (ehk ``nihke kaugus'' on alati avalik).
+
+  \subsection*{Massiivi indekseerimine}
+
+  See ülesanne on üsna sarnane ülesande tekstis näitena toodud massiivide võrdlemise ülesandega. Idee on käia läbi kogu massiiv ja iga elemendi juures vastust uuendada vaid siis, kui õige indeksi juures ollakse. Kasuks tuleb see, et võrdlusoperaator \verb'==' tagastab arvu $1$ või $0$, mida saab siis korrutamises kasutada.
+
+  \begin{lstlisting}
+secret_int ith_element(std::vector<secret_int> A, secret_int i) {
+    secret_int res = 0;
+    for (int j = 0; j < A.size(); j++) {
+        res += (i == j) * A[j];
+    }
+    return res;
+}
+  \end{lstlisting}
+
+  \subsection*{Massiivi sorteerimine}
+
+  Esimese alamülesande saab ära lahendada üpris mitme klassikalise $O(N^2)$ sorteerimisalgoritmiga. Üks võimalus põhineb pistemeetodil (ingl \textit{insertion sort}):
+
+  \begin{lstlisting}
+// võrdleb kahte elementi ja vahetab need, kui need vales järjekorras on
+void cmp_sort(secret_int& a, secret_int& b) {
+    secret_int a_lt_b = (a < b);
+    secret_int new_a = a_lt_b * a + (1 - a_lt_b) * b;
+    secret_int new_b = a_lt_b * b + (1 - a_lt_b) * a;
+    a = new_a; b = new_b;
+}
+void sort_arr(std::vector<secret_int>& A) {
+    for (int i = 1; i < A.size(); i++) {
+        for (int j = i; j > 0; j--) {
+            cmp_sort(A[j-1], A[j]);
+        }
+    }
+}
+  \end{lstlisting}
+
+  Teise alamülesande jaoks on vaja kasutada mõnda kiiremat algoritmi. Suurem osa klassikalisi $O(N \log N)$ sorteerimisalgoritme ei ole kahjuks eriti sobilikud, kuna nende tööaeg sõltub väga tugevalt sisendmassiivi väärtustest. Siiski leidub sobivaid algoritme, mis põhinevad niinimetatud ``sorteerimisvõrgustikel'' (ingl \textit{sorting network}), millel on sarnane struktuur ülaltooduga: igal sammul võrreldakse ja vajadusel vahetatakse kaks massiivi elementi. Üks võimalik realisatsioon on näiteks \href{https://en.wikipedia.org/wiki/Batcher_odd%E2%80%93even_mergesort}{Batcheri paaris-paaritu ühildusmeetod}:
+
+  \begin{lstlisting}
+void sort_arr(std::vector<secret_int>& A) {
+    int n = A.size();
+    for (int p = 0; 1<<p < n; p++) {
+        for (int k = p; k >= 0; k--) {
+            int K = 1<<k;
+            for (int j = (k == p ? 0 : K); j < n-K; j += 2*K) {
+                for (int i = 0; i < K && i < n-j-K; i++) {
+                    if ((i+j) >> (1+p) == (i+j+K) >> (1+p)) {
+                        cmp_sort(A[i+j], A[i+j+K]);
+                    }
+                }
+            }
+        }
+    }
+}
+  \end{lstlisting}
+
+  \subsection*{Graafi sidususkomponentide arvu leidmine}
+
+  Antud ajalimiidi ja sisendi suuruste juures piisab $O(N^3)$ lahendusest. Selleks, et $O(N^3)$ kätte saada, piisab omakorda lihtsast lahendusest, mis iga võimaliku serva jaoks (mida on kokku ligikaudu $N^2/2$) märgib mingil sobival viisil ära, et need tipud on samas komponendis (tehes seda $O(N)$ ajas), ja loendab pärast komponendid kokku. Üks võimalik lahendus on järgnev, kus hoitakse massiivi iga tipu komponendinumbriga.
+
+  \begin{lstlisting}
+secret_int connected_components(std::vector<std::vector<secret_int>> A) {
+    int n = A.size();
+    std::vector<secret_int> components;
+    for (int i = 0; i < n; i++) {
+        components.push_back(i);
+    }
+    secret_int num_components = n;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            // kas need tipud tuleb ühendada?
+            secret_int do_conn = A[i][j];
+            // kui juba ühendatud ei olnud, siis on sidususkomponente vähem
+            num_components -= do_conn * (components[i] != components[j]);
+            // asendame kõik components[i] esinemised väärtusega components[j]
+            secret_int from = components[i];
+            secret_int delta = do_conn * (components[j] - components[i]);
+            for (int k = 0; k < n; k++) {
+                components[k] += (components[k] == from) * delta;
+            }
+        }
+    }
+    return num_components;
+}
+  \end{lstlisting}
+
+  Lisaks osutusid üsna edukaks ka lahendused, kus maatriksit $A$ muudeti nii, et $A[i][j]$ näitas lõpuks, kas tippude $i$ ja $j$ vahel leidub mingi tee, ning leiti sellest sidususkomponentide arv.
+
+  \subsection*{Suunatud graafis teekonna leidmine}
+
+  Tippude vaheliste kauguste leidmiseks võib kasutada erinevaid viise: näiteks Floyd-Warshalli algoritmiga on võimalik leida kõikide tipupaaride vahelised kaugused. Samas võib kasutada ka laiuti läbimisest inspireeritud algoritmi ja leida iga tipu kaugus alguspunktist. Mõlemal juhul on keerukus $O(N^3)$. Lisaks tuleb meeles pidada iga tipu jaoks selle eellast, et hiljem teekond rekonstrueerida. Samuti võib abiks olla ka kohe kauguste leidmise ajal juba leitud teekonna pikkuse eraldi meeles pidamine.
+
+  Kui kaugus on leitud, siis tuleb rekonstrueerida ka teekond. Floyd-Warshalli algoritmiga leitud kaugusmaatriksi puhul võtab see samuti $O(N^3)$ operatsiooni, kuid kui laiuti läbimisega on leitud kaugused ainult alguspunktist, siis on see vaid $O(N^2)$. Lisaks tuleb teekond leida õiges järjekorras. Klassikalise ``leiame teekonna tagurpidi ja pärast teeme \verb'reverse()''' lähenemisega tekib probleem, kuna teekonna pikkus ei ole teada ja ümber tuleks pöörata ainult osa vastusemassiivist. See on küll võimalik (näiteks ühes žürii lahenduses on nii tehtud), kuid lihtsam on hoopis kogu ülesanne tagurpidi lahendada, s.t. otsida teekonda punktist $C$ punkti $B$ ümberpööratud graafis. Sellisel juhul tekib teekond üsna loomulikult õiges järjekorras.
+
+  Kummastki ideest on toodud lahendused failides \verb'sol.cpp' ja \verb'sol_slow.cpp'.
+
+  \subsection*{Algarvulisuse kontrollimine}
+
+  Esimeses alamülesandes piisab, kui teha nimekiri kõigist algarvudest, mis on väiksemad kui $10^6$, ja siis kontrollida, kas antud arv on mõnega neist võrdne.
+
+  Teise alamülesande jaoks tuleb juba natuke rohkem vaeva näha. Žürii lahendus realiseerib \href{https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test}{Milleri-Rabini algarvulisuse kontrolli}, kasutades fikseeritud aluseid $2$, $7$, ja $61$, millest piisab kõigi 32-bitiste arvude puhul algarvulisuses veendumiseks. Tuleb tähele panna, et sellises lahenduses on vaja salajasi arve korrutada ja astendada salajase mooduli järgi, mis tuleb ka ise realiseerida. Selline lahendus on toodud failis \verb'sol.cpp'.
+
+  Samas on võimalik maksimumpunktid saada ka kavalamalt jagamist kasutades. Kui sisendarv on kordarv ja väiksem kui $2^{32}$, siis leidub sellel algtegur, mis on väiksem kui $2^{16}$. Seega saab proovida antud arvu jagada kõigi algarvudega vahemikus 2 kuni $65521$. Naiivselt bitikaupa jagamist realiseerides tuleb lahendus aga liiga aeglane (täpsemalt ületab see $10^6$ tehte piiri). Siis tuleb jagamist optimeerida, kasutades teadmist, et jagaja on avalik ja peale selle ka võrdlemisi väike: maksimaalselt 16 bitti. Selgub, et jagamisfunktsioonis saab iteratsioonide arvu vähendada selle võrra, mitu jagaja ülemist bitti on $0$; seda saab loendada näiteks funktsiooni \verb'__builtin_clz' abil.
+
+  Viimase asjana tuleb tähele panna ka seda, et $1$ ei ole algarv ja et $2$ on ainus paarisarvuline algarv, ja kontrollida, et programm ka nendel juhtudel õige vastuse annab.
+\end{yl}

@@ -1,0 +1,22 @@
+name: portaal
+title: Kolmanda mõõtme saladus
+time_limit: 1
+time_limit_interpreted: 3
+memory_limit: 256
+public_testcases: all
+infile: ''
+outfile: ''
+score_type: GroupMinDeps
+score_mode: max_subtask
+
+validator: bin/validator
+model_solution: solution/sol.cpp
+solutions:
+ - solution/sol.cpp
+ - solution/sol_andres.cpp
+ - solution/sol_k4.cpp
+ - solution/sol_k8.cpp
+ - solution/sol.py
+ - solution/sol_bug1.cpp
+ - solution/sol_bug2.cpp
+ - solution/sol_bug3.cpp

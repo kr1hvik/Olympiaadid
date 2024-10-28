@@ -1,0 +1,19 @@
+\begin{yl}{6}{Segane väljund}{segane}{3 sek / 10 sek}{60 punkti}
+  \emph{Idee: Heno Ivanov, teostus ja lahenduse selgitus: Marko Tsengov}
+  
+  \begin{quote}
+    $N$ võrdset sõne pikkusega $L$ on omavahel teadmata viisil põimitud. Taasta tulemuse $S$ põhjal kõik võimalikud esialgsed sõned.
+  \end{quote}
+
+  Vaatame algul lihtsuse huvides juhte, kus $N = 2$. Naiivne lahendus on määrata igale $S$ märgile, kas ta on esimeses või teises sõnes, ning seejärel kontrollida, kas saadud sõned on võrdsed. Selle efektiivne implementatsioon lahendab ka esimese alamülesande keerukusega $O\left( \binom{2L}{L - 1} \right)$.
+
+  Täislahenduse saame dünaamilise planeerimise abil. Hoiame olekuid $(s, v)$, kus $s$ märgib pikima sõne hetkest olekut ning $v$ ülejäänud $N - 1$ sõne pikkuseid (märkame, et kui $N = 2$, siis on selleks vaid üks arv). Algseks olekuks on $(\verb|""|, [0, 0, ..., 0])$, märkides, et üheski sõnes pole ühtki märki. Nõuame, et sõnede pikkused oleksid mittekasvavalt järjestatud.
+
+  Teisendame neid olekuid, läbides sõne $S$ märgihaaval. Peame kaaluma kahte eri liiki teisendusi:
+  \begin{xenum}
+    \item Lisame praeguse märgi sõnele $s$. Seda on mõttekas teha vaid siis, kui $|s| < L$.
+    \item Suurendame mõne $v$ elemendi väärtust ühe võrra. Seejuures peab hetkene märk võrduma suurendatavale elemendile vastava märgiga sõnes $s$ (kuna muidu poleks sõned lõpuks võrdsed), samuti ei tohi ühtki väärtust suurendada üle eelmise $v$ elemendi väärtuse (esimese elemendi puhul üle $|s|$), et mittekasvamise tingimus oleks rahuldatud.
+  \end{xenum}
+
+  Teostades iga oleku puhul kõiki võimalikke teisendusi ning vältides duplikaatide ilmnemist, leiab selline algoritm $S$ läbise lõpuks parajasti kõik võimalikud algsed sõned ($v$ väärtused on kõik $L$). Algoritmi keerukuse hindamiseks märkame, et võimalikke olekuid $v$ jaoks on $O(L^N)$, $s$ võimalused on aga rohkem piiratud, kuna mitmete samade märkide puhul tekivad identsed $s$, eri märkide puhul aga $v$ väärtusi palju erinevalt suurendada ei saa, nõudes märgi lisamist sõnesse $s$. Katsetades näib algoritmi keerukus olevat ligikaudu $O(N \cdot L^N)$.
+\end{yl}

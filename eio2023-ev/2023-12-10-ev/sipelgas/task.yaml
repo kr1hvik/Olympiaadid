@@ -1,0 +1,11 @@
+name: sipelgas
+title: Sipelgas
+time_limit: 1
+time_limit_interpreted: 1
+memory_limit: 256
+n_input: 41
+public_testcases: all
+infile: ''
+outfile: ''
+score_type: GroupSum
+score_mode: max_subtask

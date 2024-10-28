@@ -1,0 +1,44 @@
+\begin{yl}{3}{Neljakandilised saelauad}{vandra}{1 sek / 3 sek}{40 punkti}
+  \emph{Idee, teostus ja lahenduse selgitus: Andres Alumets}
+  
+  Esimese 20 punkti saamiseks võime kirjutada lihtsa lahenduse.
+  Kuna $N \le 1000$, siis jääb aja\-limiidi piiridesse lahendus, kus võrdleme iga lauda iga teise lauaga
+  ja vaatame, kas need kattuvad. Kattumise kontrollimiseks on mitmeid võimalusi.
+
+  Üks sellistest on kontrollida, kas laudade servad lõikuvad.
+  Seda saab teha nii, et võtta ühe laua horisontaalne serv ja teise vertikaalne serv.
+  Seejärel vaatame, kas vertikaalse serva x-koordinaat on horisontaalse serva x-koordinaatide vahel
+  ja horisontaalse serva y-koordinaat on vertikaalse serva y-koordinaatide vahel.
+  Kui mõlemad tingimused kehtivad, siis servad lõikuvad ja lauad kattuvad.
+  Peale selle on kattumiseks veel üks võimalus: kui üks laud asub tervenisti teise peal.
+  Selle kontrollimiseks piisab, kui vaadata kas ühe laua kõigi nurkade koordinaadid on teise laua piiride vahel.
+  Kui kumbki tingimus ei kehti, siis võib kindel olla, et lauad ei kattu.
+  Kui mõni lauapaar kattus, siis kirjutame väljundisse `\verb/JAH/', muidu `\verb/EI/'.
+
+  Teine võimalus: lauad ei kattu, kui üks neist on tervenisti teisest paremal (kui esimese laua
+  vasaku serva x-koordinaat on vähemalt sama suur kui teise laua parema serva x-koordinaat) või
+  tervenisti teisest vasakul või tervenisti teisest kõrgemal või madalamal. Nii on tehtud failides
+  \verb/sol_naive.py/ ja \verb/sol_naive.cpp/ toodud lahendustes.
+
+  Täislahenduse jaoks kasutame lõikude puud (ingl \textit{segment tree}) ja skaneerivat joont (ingl \textit{sweep line}).
+  Alguses loeme sisse kõik lauad ning jätame meelde milliseid y-koordinaadi väärtuseid meil esines.
+  Seejärel teeme lõikude puu, mille iga leht tähistab kahe järjestikuse y-koordinaadi väärtuse vahelist lõiku:
+  esimene leht kahe kõige väiksema väärtuse vahelist lõiku, teine leht suuruselt teise ja
+  kolmanda vahelist lõiku jne kuni viimane leht tähistab kahe suurima vahelist lõiku.
+  Lihtsam on opereerida puuga, mille lehtede arv on 2 aste; selleks võivad ülejäävad lehed tähistada
+  piirkonda, mis on suurem kui ükskõik milline sisendis olnud y-koordinaadi väärtus.
+  Ülemised tipud puus tähistavad alluvate poolt
+  tähistatud lõikude summat ja väärtusena hoiame seal alluvate maksimumi.
+  Algselt on igal pool väärtus 0.
+
+  Edasi sorteerime lauad vasakpoolse ääre järgi mittekahanevalt
+  ja hakkame neid järjest puusse lisama. Igaühe puhul liidame selle y-koordinaadi väärtuste lõigus olevatele
+  tippudele 1 juurde ja jaotame laisalt allapoole. Lisaks hoiame meeles ka parema ääre järgi
+  järjestatud laudade jada. Enne kui uue laua puusse lisame, peame eemaldama kõik need, mille parem
+  äär on enne või samal kohal kui uue vasak. Eemaldamisel lahutame laua y-koordinaadi väärtuste lõiku
+  kuuluvatest tippudest 1. Nii on meil alati iga y-koordinaadi väärtuste lõigu kohta teada, mitu lauda
+  selles lõigus hetkel on. Kui kunagi on mõnes lõigus rohkem kui 1 laud, siis on kattumine ja
+  võime väljastada `\verb/JAH/'. Kui seda kunagi ei juhtunud, siis saame väljastada `\verb/EI/'.
+  Nii on tehtud failides \verb/sol.py/ ja \verb/sol.cpp/ toodud lahendustes, mille
+  keerukus on $O(N \log N)$ ja mis saavad maksimumpunktid.
+\end{yl}

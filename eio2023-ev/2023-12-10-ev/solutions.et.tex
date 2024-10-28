@@ -1,0 +1,77 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{eio}
+\usepackage{amsthm}
+\usepackage{subfig}
+\usepackage{physics}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+
+\usepackage{csquotes}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{language=C++,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{purple}\ttfamily,
+  commentstyle=\color{red}\ttfamily,
+  breaklines = true,
+  extendedchars = true,
+  inputencoding = utf8,
+  literate = {õ}{{\~o}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 
+}
+
+\usepackage{tikz}
+
+\renewcommand{\topfraction}{.9}
+\renewcommand{\bottomfraction}{.7}
+\renewcommand{\textfraction}{.1}
+\renewcommand{\floatpagefraction}{.8}
+\renewcommand{\dbltopfraction}{.66}
+\renewcommand{\dblfloatpagefraction}{.66}
+\setcounter{topnumber}{9}
+\setcounter{bottomnumber}{9}
+\setcounter{totalnumber}{20}
+\setcounter{dbltopnumber}{9}
+
+\newlength{\colwidth}
+\setlength{\colwidth}{0.5\textwidth}
+\addtolength{\colwidth}{-5mm}
+
+\begin{document}
+
+\begin{ol}{\eio}{Eelvoor 10.12.2023}{\lah}{}
+  \tableofcontents
+
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{section}{Juta teekond}
+  \input{teed/solution/solution.et.tex}
+
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{section}{Numbrid}
+  \input{numbrid/solution/solution.et.tex}
+
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{section}{Erinevused}
+  \input{erinevused/solution/solution.et.tex}
+
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{section}{Sipelgas}
+  \input{sipelgas/solution/solution.et.tex}
+
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{section}{Hinded}
+  \graphicspath{{hinded/solution/}}
+  \input{hinded/solution/solution.et.tex}
+
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{section}{Segane väljund}
+  \input{segane/solution/solution.et.tex}
+\end{ol}
+
+\end{document}

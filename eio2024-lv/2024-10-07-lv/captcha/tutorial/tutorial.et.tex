@@ -1,0 +1,18 @@
+\begin{yl}{2}{Viie pildiga robotilõks}{captcha}{1 sekund}{30 punkti}
+  \emph{Idee: Heno Ivanov, teostus ja lahenduse selgitus: Targo Tennisberg}
+
+Lahendus koosneb kahest osast: väikevenna klõpsude läbisimuleerimine ja selle järel õige lahenduse leidmine. 
+
+Programmeerimisaja kokkuhoiu mõttes on hea kasutada ühtset protseduuri klõpsude simuleerimiseks.
+Vaja on hoida järjekorda märgitud piltidest, iga uus klõps kas eemaldab pildi järjekorrast või siis lisab selle järjekorra lõppu. 
+Sellise protseduuri võib kirjutada ise või siis kasutada standardteegis olemasolet funktsionaalsust. 
+Näiteks Pythoni loendil on juba olemas append ja remove meetodid, mis teevad just seda, mida vaja.
+
+Kui väikevenna klõpsud on simuleeritud, tähistame lihtsuse mõttes pildid numbritega $1$ kuni $5$. 
+Paneme tähele, et kui  pilt 1 ei ole kohe järjekorra alguses, tuleb kõik eelnevad pildid sealt niikuinii eemaldada.
+
+Seega, kui järjekorra alguses on juba pilt $1$, on kõik korras. Vastasel korral eemaldame järjekorra algusest pildi ja lisame sellele vastava täiendava klõpsu vastusesse.
+Kui pilt $1$ on leitud, hakkame uurima järjekorra teist positsiooni ning kordame sama protseduuri pildi $2$ jaoks. Seejärel teeme sama pildi $3$ jaoks jne.
+
+Kui esialgne järjekord saab tühjaks, lisame kõik allesjäänud pildid õiges järjekorras vastusesse.
+\end{yl}

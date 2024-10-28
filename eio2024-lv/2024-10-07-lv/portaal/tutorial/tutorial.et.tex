@@ -1,0 +1,228 @@
+\begin{yl}{5}{Kolmanda mõõtme saladus}{portaal}{1 sek / 3 sek}{100 punkti}
+  \emph{Idee, teostus ja lahenduse selgitus: Tähvend Uustalu}
+
+  Mis eristab seda ülesannet tüüpilisest ``labürindiülesandest'', mida saab
+  ``tavalise'' BFS või DFS abil lahendada? Kuna portaalid
+  mõjutavad ka münte, siis võib münt ``eest ära liikuda''. Vaatleme näiteks alloleval
+  joonisel kujutatud olukorda. Kui läheme portaali 1 juurde ja tõmbame kangist,
+  siis liigume küll portaali 2, kuid münt liigub samal ajal portaali 3. Kui
+  uuesti kangist tõmmata, jõuame portaali 3 juurde, kus münt enne oli, aga münt
+  liigub samal ajal portaali 4 ja nii edasi. Münti ei olegi võimalik kätte saada.
+
+  \begin{center}
+    \includegraphics[scale=1.5]{example1}
+  \end{center}
+
+  Kui aga osade portaalide vahel oleks võimalik liikuda, siis saab kavalalt liikudes
+  mündi enda kätte manipuleerida. Paremal pool olevas näites saab mündi kätte nii:
+  kõndida portaali 1 juurde, tõmmata kangist, kõndida portaali 4 juurde, tõmmata 3
+  korda kangist. Seejärel uuesti kõndida portaali 4 juurde ja tõmmata 3 korda kangist.
+  Lõpuks oleme portaali 2 juures. Münt on meie seitsme kangitõmbega liikunud
+  $2 \to 3 \to 4 \to 5 \to 1 \to 2 \to 3 \to 4$. Saame kõndida portaali 4 juurde
+  ja mündi alati üles võtta.
+
+  Ent mitte alati ei ole portaalide vahel kõndimisest abi. Allolevas näites
+  ei ole jälle münti võimalik üles korjata.
+
+  \begin{center}
+    \includegraphics[scale=1.5]{example2}
+  \end{center}
+
+  Seega ei olegi nii lihtne välja selgitada, milliseid münte on üles võimalik
+  korjata. Väikeste $K$ korral (näiteks $K \le 4$) võib iseenesest kõik
+  variandid kasvõi paberil läbi mõelda. Suuremates testides on vaja süsteemsemat
+  lähenemist.
+
+  Esiteks paneme tähele, et kui piisavalt mitu korda järjest kangist tõmmata,
+  jõuab kõik lõpuks algseisu tagasi. Kindlasti juhtub see $K! = 1 \cdot 2 \cdot 3 \cdots K$
+  kangitõmbe järel, kuigi see võib juhtuda ka varem.\footnote{See juhtub kindlasti
+    alati ka $\text{VÜK}(1, 2, \ldots, K)$ kangitõmbe järel, aga sõltuvalt
+    konkreetsest permutatsioonist ka veelgi varem.} Seega, kui tõmmata kangist
+  $K! - 1$ korda, liiguvad iga $i$ kohta kõik portaali $A[i]$ juures olevad objektid
+  portaali $i$. Nii on meil võimalik ``$-1$ korda'' kangist tõmmata.
+
+  See tähendab, et kõiki käike on võimalik ``tagasi võtta'': kui astume naaberruudule, võime
+  tagasi eelmisele ruudule astuda; kui tõmbame kangist, võime $-1$ korda kangist tõmmata.
+  Seega võime mõelda igast mündist individuaalselt: kui valime mingi mündi ja selle
+  mündini on üleüldse võimalik liikuda, siis liigume mingil viisil selle mündini,
+  korjame üles ja läheme mööda tuldud teed alguspunkti tagasi. Kõik ülejäänud
+  mündid on siis täpselt samadel positsioonidel, nagu alguses. Seega piisab meil
+  ülesande lahendamiseks sellest, kui arvutame iga mündi kohta eraldi välja, kas seda on võimalik
+  üles korjata: müntide kogumise järjekord ei loe ja kunagi ei teki olukorda, kus peame
+  kahe mündi vahel valima.
+
+  \subsection*{Alamülesanded $K \le 4$, $K \le 8$, $K \le 16$}
+
+  Oma ``olekut'' saame kirjeldada kolmikuga $(x, y, t)$, kus $x$ ja $y$ on ruudu
+  koordinaadid, kus me asume, ning $t$ on tehtud kangitõmmete arv. Ülal veendusime,
+  et pärast teatud arv kordi kangi tõmbamisi jõuab kõik algseisu tagasi. Tähistame
+  seda kordade arvu $P$. $P$ väärtuseks võib võtta:
+  \begin{xitem}
+  \item faktoriaali $K! = 1 \cdot 2 \cdot 3 \cdots K$;
+  \item vähima ühiskordse $\text{VÜK}(1, 2, \ldots, K)$;
+  \item antud permutatsiooni tsüklite pikkuste vähima ühiskordse.
+  \end{xitem}
+  Nimekirjas allpool olevad arvud on väikesemad ja seega paremad.
+
+  Niisiis võime olekuid $(x, y, 0)$ ja $(x, y, P)$ lugeda samaväärseteks.
+  Oma tegevuse käigus saame olekust $(x, y, t)$ liikuda:
+  \begin{xitem}
+  \item olekutesse $(x + 1, y, t)$, $(x - 1, y, t)$, $(x, y + 1, t)$ ja $(x, y - 1, t)$,
+    aga mitte siis, kui see vastab blokeeritud ruudule;
+  \item kui ruudul $(x, y)$ on portaal, mis viib ruudule $(x', y')$,
+    siis olekusse $(x', y', (t + 1) \bmod{P})$.
+  \end{xitem}
+  Leiame tavalise BFS või DFS abil, millistesse olekutesse on võimalik jõuda.
+
+  Kui ruudul $(x, y)$ ei ole portaali, aga on münt, siis saame mündi üles korjata juhul,
+  kui on võimalik jõuda vähemalt ühte olekutest $(x, y, 0)$, $(x, y, 1)$, $(x, y, 2)$ jne.
+  Lisaks peame kontrollima, milliseid portaalide juures olevaid münte on võimalik üles korjata:
+  portaali $i$ juures olevat münti on võimalik üles korjata siis, kui on võimalik jõuda
+  ühte olekutest $(x_i, y_i, 0)$, $(x_{A_i}, y_{A_i}, 1)$, $(x_{A_{A_i}}, y_{A_{A_i}}, 2)$ jne.
+
+  Niisugune lahendus peab üle kontrollima $N \cdot M \cdot P$ olekut. Sõltuvalt sellest, millist $P$
+  väärtust kasutati, võib see teenida 30 kuni 55 punkti.
+
+  \subsection*{Täislahendus}
+
+  Joonistame suunatud graafi järgneval viisil: teeme tipu iga blokeerimata ruudu
+  kohta. Siin dokumendis kasutame mugavuse jaoks indekseid, kus portaal $i$ asub alati
+  tipus $i$. Tippu, kust alustame, tähistame $s$.
+  Kui $u$ ja $v$ on naaberruudud, siis lisame servad $u \edge{0} v$
+  ja $v \edge{0} u$. Lisaks lisame iga portaaliga ruudu $i$ korral servad
+  $i \edge{1} A_i$ ja $A_i \edge{-1} i$.\footnote{Lahendust programmeerides võib
+    serva $A_i \edge{-1} i$ lisamise ära jätta. Jääb lugejale mõtlemiseks, miks
+    lahendus endiselt korrektne on.} Saadud graafil on omadus: igale servale leidub vastupidise
+  suuna ja kaaluga serv. Seega ka igale teekonnale leidub vastupidise suuna ja kaaluga
+  teekond.
+
+  Nüüd saab ruudustikus liikuda ruudust $u$ ruutu $v$ täpselt $k$ kangitõmbega
+  parajasti siis, kui graafis leidub teekond $u \leadsto v$ kaaluga $k$.
+  Viskame graafist välja kõik tipud, kuhu algtipust $s$ teekonda ei leidu.
+  Uurime, missuguste kaaludega teekonnad $s \leadsto u$ graafis leiduda saavad.
+
+  Olgu $x$ minimaalse positiivse kaaluga tsükli kaal selles graafis (see tsükkel võib sama
+  tippu või isegi serva mitu korda külastada). Nimetame sellist tsüklit $x$-tsükliks. Kui graafis ei ole
+  ühtegi positiivse kaaluga tsüklit, tähendab see, et algruudust ei ole võimalik
+  mööda blokeerimata ruute liikuda ühegi portaali $i$ juurde, mille korral $A_i \ne i$.
+  Võimalik, et ei ole üldse võimalik ühegi portaali juurde liikuda. Sel juhul on
+  ülesanne klassikaline.\footnote{Tegelikult see juht erilist eraldi käsitlemist ei vaja.
+    Saab näidata, et alljärgnev lahendus lahendab ka selle juhu. Tuleb ainult
+    (nulliga jagamise vältimiseks) $D[i] \equiv 0 \pmod{x}$ kontrollimiseks mitte
+    teha \texttt{D[i] \% x}.}
+
+  Näitame, et ülejäänud juhtudel:
+  \begin{xitem}
+  \item kui leidub teekond $s \leadsto u$ kaaluga $w$, siis leiduvad ka teekonnad
+    kaaluga $w + x$ ja $w - x$;
+  \item kui graafis leidub tsükkel kaaluga $w$, siis $x \mid w$ (arv $w$ jagub arvuga $x$);
+  \item kui leidub teekond $s \leadsto u$ kaaluga $w$, siis ei leidu teekonda
+    kaaluga $y$, kus $y \not\equiv w \pmod{x}$.
+  \end{xitem}
+
+  Esimese väite tõestuseks valime teekonna $s \leadsto u$ kaaluga $w$, liigume
+  sealt $x$-tsükli juurde, teeme ühe ringi ja liigume tagasi tippu $u$.
+  Nii saame teekonna $s \leadsto u$ kaaluga $w + x$. Kui liikuda mööda $x$-tsüklit vastupidises
+  suunas (igale servale leidub ju vastupidise suuna ja kaaluga serv), siis saame hoopis
+  teekonna kaaluga $w - x$.
+
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{scope}[every node/.style={circle, draw, minimum size=16pt}]
+        \node (1) at (0, 0) {$s$};
+        \node (2) at (8, 0) {$u$};
+      \end{scope}
+      
+      \tikzset{decoration={snake,amplitude=.6mm,segment length=4mm,
+          post length=1mm,pre length=1mm}}
+      \begin{scope}[>={Stealth[black]},
+          every node/.style={fill=white,circle}]
+        \draw[blue, decorate, ->] (1) to[out=-5, in=-175] (2);
+        \node at (4, -0.25) {{\color{blue} $w$}};
+
+        \draw[red, decorate, ->] (4, 2) to[out=0, in=-90] (6, 4);
+        \draw[red, decorate, ->] (6, 4) to[out=90, in=0] (4, 6);
+        \draw[red, decorate, ->] (4, 6) to[out=180, in=90] (2, 4);
+        \draw[red, decorate, ->] (2, 4) to[out=-90, in=180] (4, 2);
+        \node at (4, 4) {{\color{red} $x$}};
+
+        \draw[magenta, decorate, ->] (1) to[out=5, in=175] (2);
+        \draw[magenta, decorate, ->] (2) -- (6.2, 4.2);
+        \draw[magenta, decorate, ->] (6.2, 4.2) to[out=90, in=0] (4, 6.2);
+        \draw[magenta, decorate, ->] (4, 6.2) to[out=180, in=90] (1.8, 4);
+        \draw[magenta, decorate, ->] (1.8, 4) to[out=-90, in=180] (4, 1.8);
+        \draw[magenta, decorate, ->] (4, 1.8) to[out=0, in=-90] (6.2, 3.8);
+        \draw[magenta, decorate, ->] (6.2, 3.8) -- (2);
+        \node at (4, 1) {{\color{magenta} $w + x$}};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+
+  Teise väite tõestuseks võtame tsükli kaaluga $w$, teeme seal ringi, liigume
+  $x$-tsükli juurde, teeme seal ühe ringi ja siis liigume mööda tuldud teed tagasi.
+  Saame tsükli, mille kaal on $w + x$. Analoogiliselt võime leida tsükli, mille kaal on
+  $w - x$. Seega saame tsükli kaalu $x$ kaupa vähendada ja suurendada. Kui $w$ ei jaguks
+  $x$-ga, siis saaksime nii tekitada tsükli, mille kaal jääks 0 ja $x$ vahele: vastuolu
+  eeldusega, et $x$-tsükkel on vähima positiivse kaaluga tsükkel.
+
+  Kolmanda väite tõestuseks võtame kaks teekonda $s \leadsto u$ kaaludega $w$ ja $y$. Kui teine
+  teekond ümber pöörata ja need kaks teekonda otsapidi kokku panna, saame tsükli, mille kaal
+  on $w - y$. Seega vastavalt eelmisele väitele $x \mid w - y$ ehk $w \equiv y \pmod{x}$.
+
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{scope}[every node/.style={circle, draw, minimum size=16pt}]
+        \node (1) at (0, 0) {$s$};
+        \node (2) at (8, 0) {$u$};
+      \end{scope}
+      
+      \tikzset{decoration={snake,amplitude=.6mm,segment length=4mm,
+          post length=1mm,pre length=1mm}}
+
+      \begin{scope}[>={Stealth[black]},
+          every node/.style={fill=white,circle}]
+        \draw[blue, decorate, ->] (1) to[out=-25, in=-155] (2);
+        \node at (4, -1.2) {{\color{blue} $y$}};
+
+        \draw[green, decorate, ->] (1) to[out=25, in=155] (2);
+        \node at (4, 1.2) {{\color{green} $w$}};
+
+        \draw[magenta, decorate, ->] (1) to[out=15, in=165] (2);
+        \draw[magenta, decorate, ->] (2) to[out=-165, in=-15] (1);
+        \node at (4, 0) {{\color{magenta} $w - y$}};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+
+  Kuidas seda $x$ aga leida? Leiame esiteks (näiteks laiuti või sügavuti läbimise teel)
+  iga $u$ jaoks mingi teekonna $s \leadsto u$ kaalu $D[u]$. Kui tippude $u$ ja $v$ vahel
+  leidub serv kaaluga $w$, siis on graafis tsükkel kaaluga $D[u] + w - D[v]$. Järelikult
+  $x \mid D[u] + w - D[v]$. Leiame kõikide selliste arvude $D[u] + w - D[v]$ suurima
+  ühisteguri, tähistame selle $g$. Et $x$ on kõikide $D[u] + w - D[v]$
+  jagaja, siis on ta ka nende suurima ühisteguri $g$ jagaja, seega $x \mid g$.
+
+  Näitame, et teisest küljest $g \mid x$. Olgu minimaalse positiivse kaaluga tsükli
+  tipud $u_1, u_2, \ldots, u_k$, kus $u_1 = u_k$, ja nendevaheliste servade kaalud
+  $w_1, w_2, \ldots, w_k$. Teame, et
+  \begin{align*}
+    D[u_1] + w_1 &\equiv D[u_2] \pmod{g}, \\
+    D[u_2] + w_2 &\equiv D[u_3] \pmod{g}, \\
+    &\cdots \\
+    D[u_{k - 1}] + w_{k - 1} &\equiv D[u_k] \pmod{g}
+  \end{align*}
+  Need väited kokku pannes saame, et
+  \begin{align*}
+    D[u_1] + w_1 + w_2 + \cdots + w_k &\equiv D[u_k] \pmod{g} \\
+    D[u_1] + x &\equiv D[u_1] \pmod{g} \\
+    x &\equiv 0 \pmod{g}
+  \end{align*}
+  ehk $g \mid x$. Järelikult $g = x$ ehk $g$ ongi selle minimaalse positiivse kaaluga
+  tsükli kaal.
+
+  Nüüd on meil iga tipu kohta teada arv $D[u]$ ja teame, et teekond $s \leadsto u$ kaaluga
+  $w$ eksisteerib parajasti siis, kui $D[u] \equiv w \pmod{x}$. Kuidas selle informatsiooniga
+  ülesannet lahendada? Keeruline on ainult nende müntidega, mis asuvad portaaliga ruutudel.
+  Iga sellise mündi jaoks peame kontrollima, kas leidub teekond $s \leadsto i$ kaaluga 0 või
+  $s \leadsto A_i$ kaaluga 1 või $s \leadsto A_{A_i}$ kaaluga 2 jne. Need väited on loomulikult
+  samaväärsed: münt on võimalik üles korjata ainult juhul, kui $D[i] \equiv 0 \pmod{x}$.
+\end{yl}

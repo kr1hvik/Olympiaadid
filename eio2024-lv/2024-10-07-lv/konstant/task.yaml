@@ -1,0 +1,10 @@
+name: konstant
+title: Ühetaoline tööaeg
+time_limit: 5
+time_limit_interpreted: 10
+memory_limit: 256
+public_testcases: all
+infile: eeminkruvirnsis.txt
+outfile: eeminkruvirnval.txt
+score_type: GroupMin
+score_mode: max_subtask

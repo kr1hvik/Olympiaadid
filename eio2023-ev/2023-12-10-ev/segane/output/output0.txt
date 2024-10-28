@@ -1,0 +1,8 @@
+1
+abcd
+1
+aa
+2
+aabb abab
+1
+error

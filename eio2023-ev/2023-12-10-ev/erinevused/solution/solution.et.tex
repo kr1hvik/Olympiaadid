@@ -1,0 +1,105 @@
+\begin{yl}{3}{Erinevused}{erinevused}{0,5 sek / 3 sek}{30 punkti}
+  \emph{Idee: Heno Ivanov, teostus ja lahenduse selgitus: Ahto Truu}
+
+  \begin{quote}
+    Antud $N$ täisarvu $A_1, A_2, \ldots, A_N$. Leida $A_i$ ja $A_j$ vahede absoluutväärtuste summa üle kõigi paaride $1 \le j < i \le N$. On teada, et $N \le 100\,00$ ja $0 \le A_i \le 1\,000$.
+  \end{quote}
+
+Naiivne lahendus on kõik paarid läbi vaadata ja vahede absoluutväärtused vahetult kokku liita.
+
+\begin{tabular}{p{\colwidth} p{\colwidth}}
+Python:
+\begin{lstlisting}[language=Python]
+...
+s = 0
+for i in range(n):
+  for j in range(i):
+    s += abs(a[i] - a[j])
+...
+\end{lstlisting}
+&
+C++:
+\begin{lstlisting}[language=C++]
+...
+long long s = 0;
+for (int i = 0; i < n; ++i)
+  for (int j = 0; j < i; ++j)
+    s += std::abs(a[i] - a[j]);
+...
+\end{lstlisting}
+\end{tabular}
+
+C++ lahenduses tasub tähele panna muutuja \lstinline[language=C++]|s| tüüpi: kuigi arvud $A_i$ ja nende vahed on üsna väikesed, ei mahu vahede summa suuremates testides 32-bitisesse muutujasse ära. Tõsi, eeltoodud naiivsed lahendused on nii suurtes testides ka liiga aeglased ja sellises C++ lahenduses 32-bitise muutuja kasutamisega võistlusel punkte kaotanud ei oleks.
+
+Küll aga on \lstinline[language=C++]|s| õige tüüp oluline efektiivsemates lahendustes, mille leidmiseks annab vihje teise alamülesande kitsendus. Kui arvud on kasvavalt järjestatud, tekib seaduspära, et igas paaris, kus $j < i$ on ka $A_j < A_i$ ja seega läheb igas sellises paaris $A_i$ summasse plussmärgiga. Samas igas paaris, kus $i < k$, on ka $A_i < A_k$ ja igas sellises paaris läheb $A_i$ summasse miinusmärgiga. Seega läheb iga $A_i$ summase plussmärgiga $i - 1$ ja miinusmärgiga $N - i$ korda. See algoritm annab õige tulemuse ka juhul, kui andmetes on korduvaid väärtusi: igas võrdsete elementide paaris arvestame ühte neist pluss- ja ja teist miinusmärgiga, täpselt nagu peab. Sellest tähelepanekust saamegi efektiivsemad lahendused:
+
+\begin{tabular}{p{\colwidth} p{\colwidth}}
+Python:
+\begin{lstlisting}[language=Python]
+...
+a.sort()
+s = 0
+for i in range(n):
+  s += a[i] * i
+  s -= a[i] * (n - 1 - i)
+...
+\end{lstlisting}
+&
+C++:
+\begin{lstlisting}[language=C++]
+...
+std::sort(a.begin(), a.end());
+long long s = 0;
+for (int i = 0; i < n; ++i) {
+  s += a[i] * i;
+  s -= a[i] * (n - 1 - i);
+}
+...
+\end{lstlisting}
+\end{tabular}
+
+Eeltoodud programminäidetes on avaldised `\lstinline[language=C++]|s += a[i] * i|' ja `\lstinline[language=C++]|s -= a[i] * (n - 1 - i)|' sellepärast, et nii Pythoni \lstinline[language=Python]|list|- kui ka C++ \lstinline[language=C++]|vector|-tüübis on indeksid $1 \ldots N$ asemel $0 \ldots N-1$.
+
+C++ lahenduses peame jälle mõtlema ka tüüpidele. Kui \lstinline[language=C++]|a[i]| ja \lstinline[language=C++]|i| on mõlemad 32-bitised muutujad, siis arvutatakse ka nende korrutis välja 32-bitisena. See, et tulemus pärast liidetakse 64-bitisele muutujale \lstinline[language=C++]|s|, ei hoiaks korrutise liiga suure väärtuse korral ära 32-bitise vahetulemuse ületäitumist. Selles ülesandes on ka maksimaalsel juhul (kui $i = N-1 = 99\,999$ ja $A_i = 1\,000$) korrutis veel piisavalt väike ja omistamine `\lstinline[language=C++]|s += a[i] * i|;' seega korrektne ka 32-bitiste \lstinline[language=C++]|a[i]| ja \lstinline[language=C++]|i| korral. Aga kui $A_i$ väärtuste ülempiir oleks näiteks $100\,000$, peaks ületäitumise vältimiseks hoolitsema, et korrutamine tehtaks 64-bitisena.
+
+Ületäitumise vältimiseks valitud suhteliselt väike $A_i$ ülempiir avab ukse ka veel ühele efektiivsele lahendusele, mille saame mõnes mõttes kahe eelmise lahenduse ideid kombineerides. Nimelt on võimalikke erinevaid tulemusi piisavalt vähe (ainult $1\,001$), et jõuame ajalimiiti ületamata vaadata läbi kõigi võimalike tulemuste kõik paarid (mida on $1\,000 \cdot 1\,000 / 2 = 500\,500$).
+
+Sellest saamegi järgmise lahenduse idee: loendame iga võimaliku tulemuse esinemiste arvud; seejärel vaatame läbi kõik võimalikud tulemuste paarid ja liidame iga paari elmentide vahe summasse nii mitme kordselt, kui mitu sellist tulemuste paari sisendis tegelikult leidub; paaride arvu leidmiseks piisab, kui teame, mitu korda esineb sisendis paari esimene ja mitu korda teine liige: paaride arv on siis nende esinemiste arvude korrutis, sest esimese tulemuse iga esinemine moodustab paari teise tulemuse iga esinemisega. Programmikoodis näeb see välja nii:
+
+\begin{tabular}{p{\colwidth} p{\colwidth}}
+Python:
+\begin{lstlisting}[language=Python]
+...
+mitu = [0] * piir
+for t in a:
+  mitu[t] += 1
+
+s = 0
+for t in range(piir):
+  for u in range(t):
+    s += (t - u) * mitu[t] * mitu[u]
+...
+\end{lstlisting}
+&
+C++:
+\begin{lstlisting}[language=C++]
+...
+std::vector<int> mitu(piir);
+for (auto t : a) {
+  mitu[t] += 1;
+}
+
+long long s = 0;
+for (int t = 0; t < piir; ++t) {
+  for (int u = 0; u < t; ++u) {
+    s += (long long) (t - u) *
+      mitu[t] * mitu[u];
+  }
+}
+...
+\end{lstlisting}
+\end{tabular}
+
+Taas kord andmetüüpidele mõeldes näeme, et seekord on ületäitumise vältimiseks tõesti vaja tagada, et korrutamine tehtaks 64-bitisena. Halvimal juhul, kui $100\,000$ elemendiga sisendis on kaks väärtust, kumbki $50\,000$ korda, on nende kahe esinemissageduse korrutis $2\,500\,000\,000$ ja seega 32-bitise märgiga täisarvu jaoks juba liiga suur; lisaks võib tulemuste vahe olla kuni $1\,000$, mis viib kolme teguri korrutise ülempiiri $2\,500\,000\,000\,000$-ni. Eelvoorus kasutatud komplektis sellist testi ei olnud, aga lõppvoorus sarnases olukorras arvatavasti juba oleks.
+
+\end{yl}

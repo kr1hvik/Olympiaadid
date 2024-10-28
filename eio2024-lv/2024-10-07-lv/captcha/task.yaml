@@ -1,0 +1,9 @@
+name: captcha
+title: Viie pildiga robotilõks
+time_limit: 1
+memory_limit: 256
+public_testcases: all
+infile: ''
+outfile: ''
+score_type: GroupSum
+score_mode: max_subtask

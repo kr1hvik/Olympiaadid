@@ -1,0 +1,88 @@
+% Idee: Heno Ivanov
+% Tekst: Heno Ivanov, Ahto Truu
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+\begin{ol}{\eio}{\lv 07.--13.10.2024}{\yle}{}
+\begin{yl}{6}{7-segmendilised indikaatorid}{ekraan}{1 sek / 3 sek}{100 punkti}
+
+Jukul on masin, mis näitab $N$-kohalisel ekraanil loenduri väärtust. Ekraanil on iga numbrikoha näitamiseks alloleval joonisel vasakul kujutatud seitsmest LED-segmendist koosnev indikaator. Numbrid $0 \ldots 9$ kuvatakse, nagu näidatud joonisel paremal. Täpsemini, neid kuvati nii, kuni Juku väikevend ekraani ära lõhkus. Nüüd on Jukul vaja ekraani juhtsignaalide põhjal välja selgitada, millist arvu masin kuvaks, kui selle ekraan veel töötaks.
+
+\begin{center}
+	\includegraphics[scale=0.1]{joon1.pdf}
+	\hspace{2cm}
+	\includegraphics[scale=0.1]{joon2.pdf}
+\end{center}
+
+Masina kohta on teada järgmised faktid:
+\begin{xitem}
+\item Ekraani olek on kodeeritud ühe täisarvuna.
+\item $N$ indikaatori olekut kodeerivad $7 \cdot N$ madalaimat bitti selle arvu kahendesituses.
+\item Iga indikaatori igale segmendile vastab kodeeringus üks kindel bitt.
+\item Ühe indikaatori olek (üks number ekraanil) kodeeritakse alati $7$ järjestikuse bitiga.
+\item Ekraanil kõrvuti asuvate indikaatorite olekuid kodeerivad bitigrupid on samuti kõrvuti.
+\item Kõik $N$ indikaatorit on kodeeritud ühtemoodi (indikaatorile vastava $7$-bitise grupi iga bitt kodeerib kõigis indikaatorites sama segmenti).
+\end{xitem}
+Ei ole teada, kuid on igas testis mingil konkreetsel viisil fikseeritud:
+\begin{xitem}
+\item Kas sisse lülitatud segmenti tähistab biti väärtus $0$ või $1$.
+\item Kas $N$ numbrist lühem arv on ekraanil joondatud vasakule või paremale.
+\item Kas paremale joondamise korral on $N$ numbrist lühema arvu ees ekraanil nullid või tühikud.
+\end{xitem}
+
+\suht See on interaktiivne ülesanne, kus programm peab ühe sessiooni jooksul lahendama mitu testi.
+
+Sessiooni alguses peab programm lugema sisendist indikaatorite arvu $N$ ($1 \le N \le 8$). See on sessiooni kõigis testides sama.
+
+Seejärel peab programm testide lahendamiseks lugema sisendist täisarve, igaüks eraldi real:
+\begin{xitem}
+\item Kui loetud arv on $-1$, siis sessioonis rohkem teste pole ja programm peab töö lõpetama.
+\item Mittenegatiivne arv on parajasti loenduri ekraanile saadetav kood.
+\item Kui programm suudab selle põhjal otsustada, millist arvu ekraan näitaks, tuleb see vastus väljastada ja süsteem liigub edasi järgmise testi juurde.
+\item Programm võib vastuse asemel väljastada sõna `\verb/NEXT/' (tingimata suurtähtedega). Selle peale suurendab süsteem loenduri väärtust ühe võrra ja annab programmi sisendissse uuele väärtusele vastava ekraani kodeeringu. (Loenduri maksimaalsele võimalikule väärtusele järgneb $0$.)
+\item Kui programm ei suuda mõnes testis vastust leida, võib väljastada suvalise vastuse ja süsteem liigub edasi järgmise testi juurde.
+\item Kui programm väljastab $-1$ ja lõpetab töö, siis rohkem teste ei pakuta ja programm saab punkte seni lahendatud testide eest. (Selline varane lõpetamine võib olla kasulik, et vältida programmi tööaja limiidi ületamist.)
+\end{xitem}
+
+\hnd Selles ülesandes hinnatakse iga sessiooni eraldi.
+\begin{xitem}
+\item Ühes sessioonis on kokku kuni $10\,000$ testi.
+\item Ühe sessiooni kõik testid on võrdse kaaluga. Sessiooni testide punktid summeeritakse.
+\item Iga õige vastuse eest saab programm punkte proportsionaalselt optimaalse ja programmi kasutatud sisendite arvu suhtega. Vale vastus annab alati $0$ punkti.
+\item Kui vastuse andmise hetkeks nähtud sisendi põhjal ei ole loenduri väärtus üheselt määratud, loetakse programmi antud vastus alati valeks. (Teisisõnu, programm ei tohi bluffida.)
+\end{xitem}
+
+Sessioonid on jagatud gruppidesse, milles kehtivad järgmised lisatingimused:
+\begin{xenum}
+  \item (0 punkti) Ülesande tekstis olev näide.
+  \item (70 punkti) Igas sessioonis on maksimaalselt $100$ testi.
+  \item (30 punkti) Lisapiirangud puuduvad.
+\end{xenum}
+
+\renewcommand{\sisplk}{Masin}
+\renewcommand{\valplk}{Programm}      
+\nde[0]{3cm}{3cm}
+
+Sessioonis oli kolm testi. Programm tuvastas korrektselt kõik kolm loenduri väärtust, aga kasutas optimaalsest rohkem sisendeid  ja teeniks selle sessiooni eest $40\%$ punktidest.
+
+\mrk Et tagada programmi väljastatud andmete testimissüsteemi kohale jõudmine, tuleb iga rea järel väljundpuhver tühjendada:
+
+\begin{tabular}{l|l}
+Programmikeel & Käsk \\
+\hline
+C++ & \verb'cout << ... << endl;' \\
+    & või \\
+    & \verb'cout << ... << "\n" << flush;' \\
+\hline
+Python & \verb'print(..., flush=True)' \\
+       & või \\
+       & \verb'sys.stdout.write(...)' \\
+       & \verb'sys.stdout.flush()' \\
+\hline
+\end{tabular}
+
+\end{yl}
+\end{ol}
+\end{document}

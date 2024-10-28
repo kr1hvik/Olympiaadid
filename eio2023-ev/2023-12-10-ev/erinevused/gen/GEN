@@ -1,0 +1,19 @@
+#!/bin/bash
+# ST: 0
+# näide
+touch ../input/input0.txt
+# ST: 10
+# N <= 1000
+./gen.py 2 10 0 2 > ../input/input1.txt
+./gen.py 10 100 0 10 > ../input/input2.txt
+./gen.py 1000 1000 0 1000 > ../input/input3.txt
+./gen.py 1000 1000 1 1000 > ../input/input4.txt
+./gen.py 1000 1000 1 100 > ../input/input5.txt
+# ST: 10
+# sorteeritud
+./gen.py 50000 4 0 5 > ../input/input6.txt
+./gen.py 100000 1000 0 1000 > ../input/input7.txt
+# ST: 10
+# lisapiiranguid pole
+./gen.py 50000 4 1 5 > ../input/input8.txt
+./gen.py 100000 1000 1 1000 > ../input/input9.txt

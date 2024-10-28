@@ -1,0 +1,12 @@
+name: segane
+title: Segane väljund
+time_limit: 3
+time_limit_interpreted: 10
+memory_limit: 256
+n_input: 13
+public_testcases: all
+infile: ''
+outfile: ''
+score_type: GroupMin
+score_mode: max_subtask
+divisions: G

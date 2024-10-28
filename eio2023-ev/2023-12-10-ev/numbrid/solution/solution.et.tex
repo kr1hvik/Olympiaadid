@@ -1,0 +1,128 @@
+\begin{yl}{2}{Numbrid}{numbrid}{1 sek / 3 sek}{20 punkti}
+  \emph{Idee ja teostus: Heno Ivanov, lahenduse selgitus: Ahto Truu}
+
+  \begin{quote}
+    Antud hulk arve. Leida kõik arvud, mis jäävad mingi kahe antud arvu vahele, kuid ei kuulu antud arvude hulka.
+    Arvude väärtused on kuni $10^8$, aga ei antud arve ega otsitavaid arve pole üle $50\,000$.
+  \end{quote}
+
+Selles ülesandes on ilmne lahendus vaadata läbi kõik arvud alates vähimast antud arvust kuni suurima antud arvuni ja kontrollida igaühe kohta, kas see esineb antud arvude hulgas. Arvude väärtused on kuni $10^8$, mis võib tekitada kartuse, et kõigi võimaluste läbivaatus kestab liiga kaua. Aga kui on teada, et antud arve pole üle $50\,000$ ja nende vahele jäävaid pole ka üle $50\,000$, siis see tähendab, et üheski sisendis ei saa vähima ja suurima antud arvu vahe olla üle $100\,000$.
+
+Selle idee naiivne realisatsioon Pythonis:
+\begin{lstlisting}[language=Python]
+n = int(input())
+soovid = list(map(int, input().split()))
+
+vastus = []
+for number in range(min(soovid), max(soovid)):
+  if number not in soovid:
+    vastus.append(number)
+
+print(len(vastus))
+print(*vastus)
+\end{lstlisting}
+ja C++'s:
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+  int n;
+  cin >> n;
+  vector<int> soovid;
+  for (int i = 0; i < n; ++i) {
+    int soov;
+    cin >> soov;
+    soovid.push_back(soov);
+  }
+
+  vector<int> vastus;
+  const int min_soov = *min_element(soovid.begin(), soovid.end());
+  const int max_soov = *max_element(soovid.begin(), soovid.end());
+  for (int number = min_soov; number < max_soov; ++number) {
+    if (find(soovid.begin(), soovid.end(), number) == soovid.end()) {
+      vastus.push_back(number);
+    }
+  }
+
+  cout << vastus.size() << '\n';
+  for (auto number : vastus) {
+    cout << number << ' ';
+  }
+  cout << '\n';
+}
+\end{lstlisting}
+
+Nende lahenduste miinus on, et need hoiavad soovide nimekirja loendina, kus elemendi olemasolu kontroll vajab loendi läbivaatamist, milleks kulub halvimal juhul kuni $N$ sammu. Kõigi võimalike arvude kontrolliks kulub seega $(\max - \min) \cdot N$ sammu. Selles ülesandes olid küll sisendi ja väljundi piirid ning ajalimiidid nii valitud, et ka selline naiivne lahendus võis maksimumpunktid teenida, aga üldiselt jääb see suuremate andmemahtude korral aeglaseks.
+
+Üks võimalus lahendust kiirendada on võtta soovide nimekirja hoidmiseks loenditüübi asemel kasutusele hulgatüüp, milles elemendi olemasolu kontroll on palju efektiivsem. Pythonis piisab selleks, kui \\
+\lstinline[language=Python]|  soovid = list(map(int, input().split()))| \\
+asemel kirjutada \\
+\lstinline[language=Python]|  soovid = set(map(int, input().split()))|
+
+C++ kasutajatel on vaja teha kolm asendust. Esiteks peab välja vahetama soovide nimekirja andmetüübi, milleks tuleb \\
+\lstinline[language=C++]|  vector<int> soovid;| \\
+asemel kirjutada \\
+\lstinline[language=C++]|  set<int> soovid;| \\
+Teiseks tuleb elementide nimekirja lisamine \\
+\lstinline[language=C++]|  soovid.push_back(soov);| \\
+asemel kirjutada kujul \\
+\lstinline[language=C++]|  soovid.insert(soov);| \\
+Kõige tähtsam on, et elemendi olemasolu tingimuseks peab \\
+\lstinline[language=C++]|  if (find(soovid.begin(), soovid.end(), number) == soovid.end())| \\
+asemel kirjutama \\
+\lstinline[language=C++]|  if (!soovid.contains(number))| \\
+Üldine \lstinline[language=C++]|find|-funktsioon töötab ka hulgatüübiga, aga ei oska selle eripärasid kasutada ja selline lahendus töötaks \lstinline[language=C++]|set|-tüüpi andmehoidlaga isegi aeglasemalt kui \lstinline[language=C++]|vector|-tüüpi hoidlaga.
+
+Teine võimalus efektiivsema lahenduse saamiseks on vaadata uuesti selgituse alguses toodud ülesandepüstituse lühikokkuvõtet: ``leida kõik arvud, mis jäävad mingi kahe antud arvu vahele, kuid ei kuulu antud arvude hulka''. Nimelt, kui arvujada ära sorteerida, siis on järjestikuste elementide vahele jäävad ``augud'' (ja kõik neisse kuuluvad väärtused) lihtsalt ja efektiivselt leitavad.
+
+Selle idee realisatsioon Pythonis:
+\begin{lstlisting}[language=Python]
+n = int(input())
+soovid = [int(s) for s in input().split()]
+
+soovid.sort()
+
+vastus = []
+for i in range(1, n):
+  for number in range(soovid[i - 1] + 1, soovid[i]):
+    vastus.append(number)
+
+print(len(vastus))
+print(*vastus)
+\end{lstlisting}
+ja C++'s:
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+  int n;
+  cin >> n;
+  vector<int> soovid(n);
+  for (auto & soov : soovid) {
+    cin >> soov;
+  }
+
+  sort(soovid.begin(), soovid.end());
+
+  vector<int> vastus;
+  for (int i = 1; i < n; ++i) {
+    for (int number = soovid[i - 1] + 1; number < soovid[i]; ++number) {
+      vastus.push_back(number);
+    }
+  }
+
+  cout << vastus.size() << '\n';
+  for (auto number : vastus) {
+    cout << number << ' ';
+  }
+  cout << '\n';
+}
+\end{lstlisting}
+
+\end{yl}

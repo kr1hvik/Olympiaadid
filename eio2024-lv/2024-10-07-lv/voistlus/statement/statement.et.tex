@@ -1,0 +1,69 @@
+% Idee: Olivia Tennisberg
+% Tekst: Olivia Tennisberg
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+
+\begin{ol}{\eio}{\lv 07.--13.10.2024}{\yle}{}
+  \begin{yl}{4}{Kahepäevane võistlus}{voistlus}{1 sek / 3 sek}{60 punkti}
+    Eriliselt Imeline Olümpiaad (EIO) on kahepäevane võistlus, kus osales $N$ õpilast.
+    Võistluse esimese päeva tulemused on juba avalikult teada. Keegi lekitas ka
+    teise päeva punktitabeli, aga seal pole õpilaste nimesid juures ning seega
+    pole teada, kes õpilastest millise nendest skooridest sai.
+
+    Eeldusel, et kõik õpilaste ja skooride vahelised vastavused on võimalikud, leida
+    iga õpilase jaoks, mitmel juhul tema võistluse võidaks. Täpsemalt, leida, mitmel juhul
+    oleks tema kahe päeva summaarne skoor kõigi õpilaste seas maksimaalne (loeb ka, kui
+    ta jääb esimest kohta jagama).
+
+    Kuna kombinatsioonide arv võib olla väga suur, väljastada tegeliku arvu
+    asemel jääk, mis tekib selle jagamisel arvuga $10^9+7$.
+
+    \sis Sisendi esimesel real on õpilaste arv $N$ ($1 \le N \le 300$).
+
+    Sisendi teisel real on $N$ erinevat täisarvu $A_1, A_2, \ldots, A_N$ kahanevas
+    järjekorras ($10^9 \ge A_1 > A_2 > \ldots > A_N \ge 0$), kus $A_i$ on $i$-nda õpilase
+    esimese päeva skoor. 
+
+    Sisendi kolmandal real on $N$ erinevat täisarvu $B_1, B_2, \ldots, B_N$ juhuslikus 
+    järjekorras ($0 \le B_i \le 10^9$), kus $B_i$ on \textit{mingi} õpilase teise päeva skoor. 
+
+    \val Väljastada $N$ täisarvu $C_1, C_2, \ldots, C_N$, kus $C_i$ on 
+    $i$-nda õpilase võiduvõimaluste arv mooduli $10^9+7$ järgi, igaüks eraldi reale.
+
+    \nde[0]{3cm}{3cm}
+
+    Esimene õpilane võidab võistluse siis, kui ta saab teisel päeval 6 või 9 punkti ning teiste õpilaste skoorid seda rohkem ei mõjuta.
+
+    Teine õpilane võidab võistluse mõlemas kombinatsioonis, kus ta saab teisel päeval 9 punkti.
+
+    Kolmas õpilane võidab ainult siis, kui tema saab teisel päeval 9 punkti, teine õpilane saab 6 punkti ja esimene õpilane 2 punkti.
+
+    \nde[1]{3cm}{3cm}
+
+    Alati võidab õpilane, kes saab teisel päeval 10 punkti.
+
+    \nde[2]{3cm}{3cm}
+
+    \hnd Selles ülesandes on testid jagatud gruppidesse. Iga grupi eest saavad punkte
+    ainult need lahendused, mis läbivad \textbf{kõik} sellesse gruppi kuuluvad
+    testid. Gruppides kehtivad järgmised lisatingimused:
+
+    \begin{minipage}[t]{0.45\textwidth}
+      \begin{xenum}
+        \item (0 punkti) Näited.
+        \item (18 punkti) $N \le 10$.
+      \end{xenum}
+    \end{minipage}
+    \begin{minipage}[t]{0.45\textwidth}
+      \begin{xenum} \setcounter{enumi}{2}
+        \item (18 punkti) $N \le 80$.
+        \item (24 punkti) Lisapiirangud puuduvad.
+      \end{xenum}
+    \end{minipage}
+  \end{yl}
+\end{ol}
+
+\end{document}

@@ -1,0 +1,44 @@
+% Idee: Tähvend Uustalu
+% Teostus: Birgit Veldi
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+\begin{ol}{\eio}{\lv 07.--13.10.2024}{\yle}{}
+\begin{yl}{1}{Buss nr 6}{buss}{1 sekund}{20 punkti}
+
+Juku unustas oma koduvõtmed bussi ja tahab need ära tuua. Selleks üritab ta joostes bussi peale jõuda. Kirjutada programm, mis selgitab välja, kas ta jõuab bussi peale.
+
+\sis Sisendi esimesel real on kaks tühikuga eraldatud täisarvu $H$ ja $M$, mis näitavad, et praegune kellaaeg on $H$ tundi ja $M$ minutit ($0 \le H \le 23$, $0 \le M \le 59$).
+
+Järgmisel real on bussipeatuste arv $N$ ($1 \le N \le 1\,000$).
+
+Järgnevad $N$ rida, millest $i$-ndal real ($1 \le i \le N$) on kolm tühikutega eraldatud täisarvu $H_i$, $M_i$ ja $J_i$ ($0 \le H_i \le 23$, $0 \le M_i \le 59$, $0 \le J_i \le 10\,000$), mis näitavad, et buss väljub $i$-ndast peatusest, kui kell on $H_i$ tundi ja $M_i$ minutit ning Jukul kulub oma lähtekohast peatusesse $i$ jooksmiseks $J_i$ minutit. Peatused on loetletud selles järjekorras, milles buss neid läbib.
+
+On teada, et buss ei alusta sõitu enne praegust hetke ja see jõuab lõpp-peatusesse enne südaööd.
+
+\val Väljastada kaks rida. Esimesele reale kirjutada `\verb/JAH/' või `\verb/EI/' vastavalt sellele, kas Juku jõuab bussi peale või mitte.
+
+Teisele reale väljastada üks arv. Kui Juku jõuab bussi peale, siis väljastada selle peatuse number, kuhu Juku jõuab kõige suurema ajavaruga. Kui Juku ei jõua bussi peale, siis väljastada peatus, kus tal jääb sellest kõige vähem aega puudu. Kui selliseid peatuseid on mitu, siis väljastada ükskõik milline neist.
+
+\nde[0]{3cm}{3cm}
+
+Juku jõuab 1. peatusesse 2 minutit enne bussi, 2. peatusesse aga bussist hiljem.
+
+\nde[1]{3cm}{3cm}
+
+Jukul kulub 1. peatusesse jõudmiseks 4 minutit kauem kui bussil, 2. peatusse jõudmiseks 3 minutit kauem ja 3. peatusesse jõudmiseks 15 minutit kauem. Seega Juku bussi peale ei jõua, kuid kõige vähem jääb tal sellest puudu 2. peatuses.
+
+\hnd Selles ülesandes antakse punkte iga testi eest eraldi. Testid on jagatud gruppidesse, milles kehtivad järgmised lisatingimused:
+\begin{xenum}
+  \item (0 punkti) Ülesande tekstis olevad näited. Nende lahendamise eest punkte ei saa, aga nende hindamise tulemustest on näha, kas programm töötab serveris testides õigesti.
+  \item (5 punkti) $N \le 10$ ja kõigi kellaaegade tunninäidud on samad ($H = H_1 = H_2 = \ldots = H_N$).
+  \item (5 punkti) $N \le 100$ ja $H = M = 0$.
+  \item (10 punkti) Lisapiirangud puuduvad.
+\end{xenum}
+Testi eest punktide teenimiseks peavad mõlemad väljundi read olema korrektsed.
+
+\end{yl}
+\end{ol}
+\end{document}

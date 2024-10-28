@@ -1,0 +1,222 @@
+\begin{yl}{4}{Kahepäevane võistlus}{voistlus}{1 sek / 3 sek}{60 punkti}
+  \emph{Idee ja teostus: Olivia Tennisberg, lahenduse selgitus: Tähvend Uustalu}
+
+  \subsection*{Alamülesanne $N \le 10$}
+
+  Esimese alamülesande lahendamise jaoks proovime läbi kõik variandid panna
+  igale esimese päeva skoorile vastavusse mõni teise päeva skoor. Selleks
+  on $N! = 1 \cdot 2 \cdot 3 \cdots N$ varianti, mis $N = 10$ puhul jääb
+  kolme ja poole miljoni ringi. Olgu öeldud, et nii Pythonis kui C++-s on variantide
+  läbi vaatamiseks mugavaid abifunktsioone. Pythonis on üks kasulik funktsioon
+  \verb/itertools.permutations/, C++-s on aga näiteks võimalik kasutada
+  \verb/std::next_permutation/. Näiteks Pythonis võiks lahendus
+  olla midagi sellist.
+  \begin{lstlisting}[language=Python]
+import itertools
+
+N = int(input())
+A = list(map(int, input().split()))
+B = list(map(int, input().split()))
+
+# answer[i] olgu i-nda õpilase võiduvõimaluste arv, esialgu 0
+answer = [0] * N
+
+# itertools.permutations(B) tagastab listi B kõik permutatsioonid
+# seejuures kordustega, näiteks itertools.permutations([2, 1, 2])
+# sisaldab (1, 2, 2) kaks korda
+# see on ka see, mida me praegu tahame
+for perm in itertools.permutations(B):
+    # leiame, mis oleks sellise vastavuse korral võitja skoor
+    # seda saab kindlasti ka mingi one-lineriga, aga jätame
+    # praegu lahenduse lihtsaks
+    highest_score = 0
+    for i in range(N):
+        highest_score = max(highest_score, A[i] + perm[i])
+
+    # nüüd lisame ühe kõikide osalejate vastusele, kes selle
+    # skoori saavutasid
+    for i in range(N):
+        if A[i] + perm[i] == highest_score:
+            answer[i] += 1
+
+print(*answer, sep="\n")
+  \end{lstlisting}
+
+  Selline lahendus teenib 18 punkti. Suuremates testides aga ületab
+  ajalimiidi. Mis on selle põhjus? Ülal märkisime, et vaja on läbi vaadata
+  $N!$ varianti. Kui $N = 80$, siis $N! \approx 7 \cdot 10^{118}$;
+  kui $N = 300$, siis juba $N! \approx 3 \cdot 10^{614}$.
+
+  Kui arvestada, et ühe variandi läbi vaatamiseks kulub 10 nanosekundit
+  ehk $10^{-8}$ sekundit, siis $300!$ variandi läbi vaatamiseks kulub
+  suurusjärgus $10^{599}$ aastat (mis on kõvasti rohkem, kui universumi
+  eluiga mistahes hääbumise stsenaariumis).
+
+  Raskemates ülesannetes on see tüüpiline. Peaaegu kõikidele informaatikaülesannetele
+  on võimalik \emph{mingi} lahendus välja mõelda, näiteks kõikide variantide läbi
+  vaatamise kaudu (kuigi mõnikord osutub ka sellise programmi kirjutamine üsna
+  keeruliseks). Vajame lisaks toimivale lahendusele ka piisavalt kiiret lahendust.
+  Mõnes ülesandes ongi see kiire lahenduse leidmine ülesande lahendamise lõviosa.
+  Selle juurde käib oskus hinnata, kui kaua programm halvimal juhul aega võtab.
+  Üldiselt ei maksa loota sellele, et testide seas seda kõige halvemat juhtu lihtsalt
+  ei ole.
+
+  Kindlasti ei piisa siin teatud pisioptimeeringutest, nagu C++-s \verb/i++/ asemel
+  \verb/++i/ kirjutamine. Meie praegune lahendus ei ole mõne millisekundi võrra liiga
+  aeglane, vaid õige mitu suurusjärku liiga aeglane. Täislahenduseks on vaja hoopis
+  teistsugust lähenemist.
+
+  \subsection*{Täislahendus}
+
+  Sorteerime teise päeva tulemused kasvavas järjekorras.
+  Edasi on täislahendust hea selgitada näite abil. Vaatleme järgnevat testi:
+  \[
+  \begin{array}{r|cccccc}
+    A & 12 & 10 & 9 & 8 & 6 & 1 \\
+    \hline
+    B &  1 &  2 & 5 & 7 & 8 & 9
+    \end{array}
+  \]
+  Uurime iga paari $(i, j)$ kohta, mitu võimalust on õpilasel $i$ võistlus
+  võita, kui ta saab teisel päeval $j$-nda tulemuse.
+  \begin{lstlisting}[language=Python]
+N = int(input())
+A = list(map(int, input().split()))
+B = list(map(int, input().split()))
+B.sort()
+for i in range(N):
+    for j in range(N):
+        # TODO: mitu võimalust on i-ndal õpilasel võistlus võita
+        # eeldusel, et ta saab teisel päeval j-nda tulemuse
+  \end{lstlisting}
+  Näiteks selgitame välja, mitu võimalust on võita õpilasel, kes sai esimesel
+  päeval 8 punkti, eeldusel, et ta sai teisel päeval 7 punkti. See tähendab,
+  et ükski ülejäänud õpilane ei tohi saada üle $8 + 7 = 15$ punkti.
+
+  Ülejäänud õpilased on siis:
+  \[
+  \begin{array}{r|cccccc}
+    A & 12 & 10 & 9 & 6 & 1 \\
+    \hline
+    B &  1 &  2 & 5 & 8 & 9
+  \end{array}
+  \]
+  Proovime välja arvutada, mitu võimalust on igale ülejäänud õpilasele valida
+  vastav teise päeva tulemus. Alustame sellest, kellel oli esimesel päeval
+  kõige kõrgem tulemus, sest tal on kõige vähem variante.
+  \begin{xitem}
+  \item Õpilane, kes sai esimesel päeval 12 punkti, pidi teisel päeval saama
+    1 või 2 punkti (kui ta oleks saanud juba 5 punkti, siis oleks tal kokku
+    $12 + 5 = 17 > 15$ punkti). Seega 2 varianti.
+  \item Õpilane, kes sai esimesel päeval 10 punkti, pidi teisel päeval saama
+    1, 2 või 5 punkti. Üks nendest valikutest on aga juba eelmisele õpilasele
+    reserveeritud. Seega $3 - 1 = 2$ varianti.
+  \item Õpilane, kes sai esimesel päeval 9 punkti, pidi teisel päeval saama
+    1, 2 või 5 punkti. Kaks nendest valikutest on eelmistele õpilastele reserveeritud.
+    Kokku $3 - 2 = 1$ variant.
+  \item Õpilane, kes sai esimesel päeval 6 punkti, pidi teisel päeval saama
+    1, 2, 5, 8 või 9 punkti, neist kolm on eelmistele reserveeritud.
+    Kokku $5 - 3 = 2$ varianti.
+  \item Viimasel õpilasel on analoogiliselt $5 - 4 = 1$ variant.
+  \end{xitem}
+  Kokku on sellel õpilasel $2 \cdot 2 \cdot 1 \cdot 2 \cdot 1 = 8$ võimalust
+  võita eeldusel, et ta sai teisel päeval 7 punkti.
+  \begin{lstlisting}[language=Python]
+MOD = 10**9 + 7
+N = int(input())
+A = list(map(int, input().split()))
+B = list(map(int, input().split()))
+B.sort()
+for i in range(N):
+    total_ways = 0
+    for j in range(N):
+        # mitu võimalust on i-ndal õpilasel võistlus võita
+        # eeldusel, et ta saab teisel päeval j-nda tulemuse
+        # selleks peavad ülejäänud õpilased saama ülimalt A[i] + B[j] punkti
+        ways = 1
+
+        # mitu sobivat teise päeva skoori on?
+        good_scores = 0
+
+        # hakkame kahanevas järjekorras õpilasi läbi käima, nagu ülal näidatud
+        for k in range(N):
+            if i == k:
+                # õpilane, kes pidi võitma
+                # tema jätame siinkohal vahele
+                continue
+
+            while good_scores < N and A[k] + B[good_scores] <= A[i] + B[j]:
+                good_scores += 1
+
+            # õpilasel k on good_scores võimalikku teise päeva skoori
+            possible_scores = good_scores
+
+            # aga mõned neist on juba eelmistele reserveeritud
+            if k < i:
+                possible_scores -= k
+            else:
+                possible_scores -= k - 1
+
+            # lisaks võib good_scores sisse olla arvestatud ka j-s
+            # mis on samuti juba ära lubatud
+            if j < good_scores:
+                possible_scores -= 1
+
+            ways *= possible_scores
+            ways %= MOD
+
+        total_ways += ways
+        total_ways %= MOD
+    print(total_ways)
+  \end{lstlisting}
+
+  Keerukus on $O(N^3)$.
+
+  \textbf{Lisaväljakutse:}
+  Lahenda ülesanne keerukusega $O(N^2 \log N)$ (võib näiteks eeldada, et sisendi
+  piirangutes on $N \le 1000$).
+
+  \subsection*{Jäägiga jagamisest}
+
+  Siia juurde on hea rääkida ka moodulitest. Selles ülesandes (ja üldse paljudes
+  ``võimaluste loendamise'' ülesannetes) on palutud vastuse asemel väljastada
+  jääk, mis tekib vastuse jagamisel arvuga $10^9 + 7$ (öeldakse ka: ``vastus
+  mooduli $10^9 + 7$ järgi'').
+
+  Esiteks olgu öeldud, et kõikides endast lugu pidavates programmerimiskeeltes
+  on selline jäägi leidmine sisseehitatud. Nii Pythonis kui C++-s leiab
+  \texttt{a \% b} jäägi, mis tekib arvu $a$ jagamisel arvuga $b$.\footnote{Selles
+    ülesandes see küll suurt rolli mängida ei tohiks, aga
+    negatiivsete arvudega tuleb kohati ettevaatlik olla: \texttt{-8 \% 5} on
+    Pythonis \texttt{2}, C++-s aga \texttt{-3}. Mõlemad on omamoodi loogilised.}
+  Käsitsi mingit kirjalikku jagamist ei ole kindlasti vaja programmeerida!
+
+  Milleks aga sellist täiendavat sammu vaja on?
+  Asi on selles, et vastus võib olla väga suur arv. Näiteks kui antud ülesandes
+  $N = 300$ ja test on niisugune, et alati võidab üks ja sama õpilane, siis on
+  vastus
+  \[ N! = 1 \cdot 2 \cdot 3 \cdots N \approx 3 \cdot 10^{614}. \]
+  C++-s on tavalised täisarvud 32- või 64-bitised, mis tähendab, et nende
+  väärtus saab olla vastavalt ülimalt $2\,147\,483\,647$ või $9\,223\,372\,036\,854\,775\,807$.
+  Need ülempiirid on palju väikesemad kui ülaltoodud 615-kohaline arv.
+  Pythonis, kus tavaline täisarv saab olla kuitahes suur, on selles mõttes
+  lihtsam, aga see lihtsus on omamoodi petlik: väga suurte arvudega arvutamine
+  võib osutuda aeglaseks. Antud ülesandes ei ole see nii oluline, aga paljudes
+  variantide loendamise ülesannetes ei ole vastused mitte mõnesaja-, vaid miljardikohalised.
+
+  Paneme tähele,\footnote{Jagamisega on pisut keerulisem.
+    Selles ülesandes ei ole see oluline, aga saab näidata, et kui $p$ on algarv ning
+    $a$ jagub $b$-ga, siis $\frac{a}{b} \bmod{p} = (a b^{p - 2}) \bmod{p}$.} et
+  \begin{align*}
+    (a + b) \bmod{c} &= (a \bmod{c} + b \bmod{c}) \bmod{c} \\
+    (a - b) \bmod{c} &= (a \bmod{c} - b \bmod{c}) \bmod{c} \\
+    a \cdot b \bmod{c} &= [(a \bmod{c}) \cdot (b \bmod{c})] \bmod{c}.
+  \end{align*}
+  Siin tähistab $\bmod$ mooduli võtmise ehk jäägi leidmise tehet.
+  See tähendab, et matemaatilises mõttes ei ole vahet, kas võtta moodul alles
+  arvutuskäigu lõpus või pärast iga vahevastuse leidmist.
+
+  Ülesannetes, kus vastus tuleb väljastada mooduli järgi, ongi tavaliselt
+  mõeldud, et lahenduses võetakse moodulit iga tehte
+  järel, sest nii ei kasva ka vahetulemused liiga suureks.
+\end{yl}

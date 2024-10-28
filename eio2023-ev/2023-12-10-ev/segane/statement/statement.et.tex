@@ -1,0 +1,71 @@
+% Idee: Heno Ivanov
+% Teostus: Marko Tsengov
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+\begin{ol}{\eio}{\ev 10.12.2023}{\yle}{}
+	\begin{yl}{6}{Segane väljund}{segane}{3 sek / 10 sek}{60 punkti}
+		Juku katsetas erinevaid käsureaprogramme. Enamiku programmide mitmekordsel järjest käivitamisel sai ta mitu korda sama väljundi. Näiteks programm \verb|pwd| väljastas kahekordsel järjest käivitamisel järgneva:
+		\begin{verbatim}
+			/home/juku/lahendused/segane
+			/home/juku/lahendused/segane
+		\end{verbatim}
+
+		Samas on selline väljund garanteeritud vaid siis, kui programme jooksutatakse üksteise järel. Kui Juku käivitas ühe programmi mitu eksemplari korraga, märkas ta, et nende väljundid põimusid, andes igal katsel erineva tulemuse. Näiteks \verb|pwd| kaht eksemplari korraga jooksutades sai Juku kahel katsel järgnevad väljundid:
+		\begin{verbatim}
+			/home//homjukue/ju/lahkeundu/sedl/ahseeganen
+			dused/segane
+		\end{verbatim}
+		\vspace{-3mm}
+		\begin{verbatim}
+			/h/ohomme/e/juku/lajukhue/landusehedn/segadunseed/
+			segane
+		\end{verbatim}
+		Seejuures märkas Juku, et kuigi programmi erinevate eksemplaride väljastatud märgid võivad olla üksteise vahel, väljastati programmi iga eksemplari kogu väljund täielikult ja kõik ühe eksemplari väljastatud märgid omavahel õiges järjekorras.
+
+		Juku otsustas seda veidrat nähtust korduvalt katsetada, kuid peale pisut aega proovimist märkas ta, et ta ei tea tegelikult mõnede programmide väljundit. Nüüd tahab ta olemasoleva info põhjal võimalikud väljundid taastada.
+
+		\sis Selles ülesandes võib sisend koosneda mitmest alamtestist. Sisendi esimesel real on alamtestide arv $T$ ($1 \le T \le 20$).
+
+		Iga alamtest koosneb kahest reast.
+		Esimesel real on käivitatud programmide arv $N$ ($2 \le N \le 10$).
+		Teisel real on sõne $S$, ühe programmi $N$ eksemplari samaaegsel käivitamisel saadud väljund. Lihtsuse huvides koosneb see sõne vaid ladina tähestiku väiketähtedest ning ei sisalda tühikuid, rea\-vahetusi ega muid erimärke.
+
+		\val Iga alamtesti kohta väljastada kaks rida.
+		Esimesele reale väljastada täisarv, mis näitab programmi kõigi võimalike väljundite arvu.
+		Teisele reale väljastada programmi kõik võimalikud väljundid tühikutega eraldatult ja tähestikulises järjekorras.
+
+		Olgu $L$ programmi ühe eksemplari väljundi pikkus ($S$ pikkus on siis $N \cdot L$). Iga alamtesti puhul on garanteeritud, et $N^L \le 2 \cdot 10^7$. Järgnev tabel näitab võimalikele $N$ väärtustele vastavaid maksimaalseid $L$ väärtusi:
+		\begin{center}
+			\begin{math}
+				\begin{array}{c c}
+					N & \max L \\
+					\hline
+					2 & 24 \\
+					3 & 15 \\
+					4 & 12 \\
+					5 & 10 \\
+					6 & 9 \\
+					7 & 8 \\
+					8 & 8 \\
+					9 & 7 \\
+					10 & 7
+				\end{array}
+			\end{math}
+		\end{center}
+
+		\nde[0]{7cm}{5cm}
+
+		Esimeses alamtestis on programmi eksemplaride väljundid väljastatud järjest. Teises alam\-testis võisid programmi eksemplarid väljastada märke paljudel erinevatel viisidel põimitult, kuid programmi väljundi jaoks on vaid üks võimalik variant. Kolmandas alamtestis on toodud olukord, kus programm võis väljastada ühe kahest võimalikust väljundist.
+
+		\hnd Selles ülesandes on testid (sisendid) jagatud gruppidesse. Iga grupi eest saavad punkte ainult need lahendused, mis läbivad kõik sellesse gruppi kuuluvad testid. Gruppides kehtivad järgmised lisatingimused:
+		\begin{xenum}
+			\item (15 punkti) $N = 2$, $L \le 11$.
+			\item (15 punkti) $N = 2$.
+			\item (30 punkti) Lisatingimused puuduvad.
+		\end{xenum}
+	\end{yl}
+\end{ol}
+\end{document}

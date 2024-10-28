@@ -1,0 +1,97 @@
+\begin{yl}{1}{Juta teekond}{teed}{1 sekund}{10 punkti}
+  \emph{Idee: Känguru, teostus: Sandra Schumann, lahenduse selgitus: Ahto Truu}
+
+Üks võimalus selle ülesande lahendamiseks on leida kõik võimalikud arvujadad, mille Juta võib oma teekonnal üles kirjutada, ja siis kontrollida, kas sisend on üks neist. See pole väga raske, sest kokku on üldse ainult kaheksa võimalikku jada. Siiski on selline käsitsi kõigi variantide välja kirjutamine üsna tüütu. See on ka natuke veaohtlik, sest kui ühes neist variantidest trükiviga teha, siis saame programmi, mis enamasti töötab küll õigesti, aga vahel harva siiski ka valesti.
+
+Parem võimalus on koostada lahendus teelõikude kaupa:
+\begin{xenum}
+\item Esimesel teelõigul võib Juta minna kas ülemist või alumist haru mööda ja kirjutada üles vastavalt kas arvu 1 või arvu 3. Järelikult, kui sisendi esimesel real on mingi muu arv, siis ei saa see olla Juta teekonna üleskirjutus.
+\item Ka teisel teelõigul võib Juta minna kas ülemist või alumist haru mööda ja siis kirjutada üles vastavalt kas arvu 6 või arvu 8. Järelikult, kui sisendi teisel real on mingi muu arv, siis ei saa see olla Juta teekonna üleskirjutus.
+\item Kolmandal teelõigul võib Juta samuti minna kas ülemist või alumist haru mööda ja siis kirjutada üles vastavalt kas arvu 2 või arvu 5. Järelikult, kui sisendi kolmandal real on mingi muu arv, siis ei saa see olla Juta teekonna üleskirjutus.
+\item Kui üheski kolmest eelmisest punktist vastuolu ei tekkinud, siis on võimalik, et sisendis olev arvujada on saadud Juta teekonna üleskirjutusena.
+\end{xenum}
+
+Eelnev loogika näeb keeltes Python ja C++ programmeerituna välja umbes selline:
+
+\begin{tabular}{p{\colwidth} p{\colwidth}}
+Python:
+\begin{lstlisting}[language=Python]
+arv = int(input())
+if arv != 1 and arv != 3:
+  print("EI")
+  exit()
+
+arv = int(input())
+if arv != 6 and arv != 8:
+  print("EI")
+  exit()
+
+arv = int(input())
+if arv != 2 and arv != 5:
+  print("EI")
+  exit()
+
+print("JAH")
+\end{lstlisting}
+&
+C++:
+\begin{lstlisting}[language=C++]
+#include <iostream>
+using namespace std;
+
+int main() {
+  int arv;
+
+  cin >> arv;
+  if (arv != 1 and arv != 3) {
+    cout << "EI\n";
+    return 0;
+  }
+
+  cin >> arv;
+  if (arv != 6 and arv != 8) {
+    cout << "EI\n";
+    return 0;
+  }
+
+  cin >> arv;
+  if (arv != 2 and arv != 5) {
+    cout << "EI\n";
+    return 0;
+  }
+
+  cout << "JAH\n";
+}
+\end{lstlisting}
+\end{tabular}
+
+Pythonis võib tingimuse `\lstinline[language=Python]|arv != 1 and arv != 3|' asemel kirjutada ka `\lstinline[language=Python]|arv not in [1, 3]|'. Kui võimalikke väärtusi on rohkem kui kaks, siis on teine variant lühem ja selgem.
+
+Soovi korral võiks kõigi ridade kohta käivad tingimused koguda kokku ja kirjutada ühe suurema loogilise avaldisena, Pythonis näiteks nii:
+
+\begin{lstlisting}[language=Python]
+arv1 = int(input())
+arv2 = int(input())
+arv3 = int(input())
+
+if (arv1 == 1 or arv1 == 3) and \
+    (arv2 == 6 or arv2 == 8) and \
+    (arv3 == 2 or arv3 == 5):
+  print("JAH")
+else:
+  print("EI")
+\end{lstlisting}
+
+See siiski pigem ei ole hea stiil, sest selliseid suuri avaldisi on keerulisem lugeda, mis teeb raskemaks nende tähenduse mõistmise ja õigsuse kontrollimise.
+
+Keerulisemate avaldiste kirjutamisel peab silmas pidama ka tehete järjekorda. Eelolevas näites on sulud \lstinline[language=Python]|or|-tehete ümber vajalikud, sest üldiselt on kõigis programmikeeltes \lstinline[language=Python]|and|-tehte prioriteet kõrgem ja ilma sulgudeta avaldist
+\begin{lstlisting}[language=Python]
+arv1 == 1 or arv1 == 3 and arv2 == 6 or arv2 == 8 and arv3 == 2 or arv3 == 5
+\end{lstlisting}
+tõlgendab kompilaator, nagu see oleks
+\begin{lstlisting}[language=Python]
+arv1 == 1 or (arv1 == 3 and arv2 == 6) or (arv2 == 8 and arv3 == 2) or arv3 == 5
+\end{lstlisting}
+mille tähendus on muidugi hoopis teine.
+
+\end{yl}
