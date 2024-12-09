@@ -1,0 +1,161 @@
+\begin{yl}{2}{Sokid}{sokid}{1 sekund}{20 punkti}
+  \emph{Idee: Tähvend Uustalu, teostus: Birgit Veldi, lahenduse selgitus: Birgit Veldi ja Ahto Truu}
+
+  Juku tahab võimalikult vähe sokke üle värvida. Seega oleks tal mõistlik alustuseks ühte värvi sokkidest võimalikult palju paare moodustada. 
+  Selleks võiks kokku lugeda, kui palju igat värvi sokke on. Siis on meil ühe värvi kohta kaks võimalust: 
+  \begin{xitem}
+    \item kui seda värvi sokke on paarisarv, saame need omavahel paarideks jaotada;
+    \item kui seda värvi sokke on paaritu arv, saame kõik peale ühe omavahel paarideks jaotada.
+  \end{xitem}
+  Nii jääb meil igast sellisest värvist, mida oli paaritu arv, täpselt üks sokk üle.
+  Kui neid ülejäänud sokke on paaritu arv, siis me neid kuidagi paarideks jaotada ei saa ning väljastada tuleb $-1$. (Seda võib tegelikult ka kohe algul kontrollida: kui sokkide koguarv $N$ on paaritu, siis neid paarideks jaotada pole võimalik.)
+  Kui ülejäänud sokke on aga paarisarv, siis saame need ükskõik kuidas paarideks jaotada ning igas saadud paaris ühe soki oma paarilisega sobivaks üle värvida.
+
+  Eelnev loogika näeb keeltes Python ja C++ programmeerituna välja umbes selline:
+
+\begin{tabular}{p{\colwidth} p{\colwidth}}
+Python:
+\begin{lstlisting}[language=Python]
+# loeme sokkide arvu
+n = int(input())
+
+# sokkide statistika värvide kaupa
+sokid = {}
+for i in range(n):
+  varv = input().strip()
+  if varv in sokid:
+    # oleme seda värvi juba näinud,
+    # suurendame loendurit
+    sokid[varv] += 1
+  else:
+    # esimene seda värvi sokk,
+    # alustame uue lenduriga 1-st
+    sokid[varv] = 1
+
+# leiame üksikute sokkide arvu 
+yksi = 0
+for arv in sokid.values():
+  # paaritu arv lisab ühe üksiku soki
+  yksi += arv % 2
+
+# väljastame vastuse
+if yksi % 2 > 0:
+  # üksikuid on kokku paaritu arv,
+  # lahendust ei ole
+  print(-1)
+else: 
+  # peab pooled üksikud üle värvima
+  print(yksi // 2)
+\end{lstlisting}
+&
+C++:
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <string>
+#include <map>
+using namespace std;
+
+int main() {
+  // loeme sokkide arvu
+  int n;
+  cin >> n;
+
+  // sokkide statistika värvide kaupa
+  map<string, int> sokid;
+  for (int i = 1; i <= n; ++i) {
+    string varv;
+    cin >> varv;
+    // uue värviga sokid[varv]
+    // poole pöördumine paneb selle
+    // algväärtuseks automaatselt 0
+    sokid[varv] += 1;
+  }
+
+  // leiame üksikute sokkide arvu 
+  int yksi = 0;
+  for (auto [varv, arv] : sokid) {
+    // paaritu arv lisab ühe üksiku
+    yksi += arv % 2;
+  }
+
+  // väljastame vastuse
+  if (yksi % 2 > 0){
+    // kui üksikuid on kokku paaritu
+    // arv, siis lahendust ei ole
+    cout << -1 << '\n';
+  } else{
+    // muidu peab pooled üle värvima
+    cout << yksi / 2 << '\n';
+  }
+}
+\end{lstlisting}
+\end{tabular}
+
+  Pythoni kasutajatel on võimalik lugeda värvide statistika kokku ka standardteegi Counter objekti abil:
+
+\begin{lstlisting}[language=Python]
+from collections import Counter
+
+n = int(input())
+loe = Counter(input().strip() for _ in range(n))
+
+if n % 2 == 1:
+  print(-1)
+else:
+  v = sum(c % 2 for c in loe.values())
+  print(v // 2)
+\end{lstlisting}
+
+  Veel üks võimalus on pidada hulgatüüpi muutujas jooksvalt arvet ainult paariliseta sokkide üle:
+
+\begin{tabular}{p{\colwidth} p{\colwidth}}
+Python:
+\begin{lstlisting}[language=Python]
+n = int(input())
+
+yksi = set()
+for i in range(n):
+  varv = input().strip()
+  if varv in yksi:
+    yksi.remove(varv)
+  else:
+    yksi.add(varv)
+
+if n % 2 > 0:
+  print(-1)
+else: 
+  print(len(yksi) // 2)
+\end{lstlisting}
+&
+C++:
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <string>
+#include <set>
+using namespace std;
+
+int main() {
+  int n;
+  cin >> n;
+
+  set<string> yksi;
+  for (int i = 1; i <= n; ++i) {
+    string varv;
+    cin >> varv;
+    if (yksi.contains(varv)) {
+      yksi.erase(varv);
+    } else {
+      yksi.insert(varv);
+    }
+  }
+
+  if (n % 2 > 0){
+    cout << -1 << '\n';
+  } else{
+    cout << yksi.size() / 2 << '\n';
+  }
+}
+\end{lstlisting}
+\end{tabular}
+
+\end{yl}

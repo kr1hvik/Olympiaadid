@@ -1,0 +1,4 @@
+10 3
+aba aaaabaa babbbb bbaab bbaababb aabbabbb aabaaaa abbaaa abbbbbb bbbbb
+bbbbbbbb bbb aab babbb bbbab babbbbba bbaaaaba aababb baa bbaabbab
+bbbbab ba bbabb bbabbb abaaaa aababba aaaa bbabba aaaaab bb

@@ -1,0 +1,78 @@
+\begin{yl}{1}{Jõulutuled}{tuled}{1 sekund}{10 punkti}
+  \emph{Idee ja teostus: Sandra Schumann, lahenduse selgitus: Ahto Truu}
+
+  Selles ülesandes on esimene trikk, et tulede põlemashoidmise kulud on antud sentides, aga Juta päevane eelarve eurodes. Arvutuste lihtsustamiseks oleks hea teisendada kõik suurused samadesse ühikutesse. Selleks võib kas $X$ ja $Y$ väärtused mõlemad 100-ga jagada (siis arvutame edasi eurodes) või $N$ väärtuse 100-ga korrutada (siis arvutaksime edasi sentides).
+
+  Ülesande sisu juurde minnes peaks olema üsna selge, et maksimaalse tulede põlemisaja saamiseks on vaja võimalikult palju kasutada odavamat elektrit. Kuna pole ette teada, kas odavam on päevane või õhtune elekter, tuleb programm kirjutada nii, et see töötaks õigesti mõlemal juhul.
+
+  Oletame, et odavam on päevane elekter ($X < Y$). Siis on $N$ euro eest võimalik tulesid põlemas hoida $N / X$ tundi. Juta koolist koju jõudmise ajal on päevase elektrihinna kehtivust jäänud veel $18 - 14 = 4$ tundi. Kui $N / X < 4$ (ehk $N < 4 \cdot X$), siis saab Jutal raha otsa enne kui õhtune elektrihind kehtima hakkab ja seega vastus ongi $N / X$.
+  
+  Kui $N > 4 \cdot X$, siis on Jutal õhtuse elektrihinna kehtimahakkamise ajaks ära kulunud $4 \cdot X$ eurot ja alles veel $N - 4 \cdot X$ eurot, mille eest ta saab tulesid õhtuse elektrihinna kehtimise ajal veel $(N - 4 \cdot X) / Y$ tundi lisaks põlemas hoida. Seega siis on vastus $4 + (N - 4 \cdot X) / Y$.
+
+  Kui õhtune elekter on päevasest odavam, siis saame arutada analoogiliselt. Õhtuse hinnaga oleks võimalik tulesid põlemas hoida $N / Y$ tundi. Enne Juta magamaminekut jõuab õhtune hind kehida $5$ tundi. Seega, kui $N < 5 \cdot Y$, siis on vastus $N / Y$, vastasel juhul aga $5 + (N - 5 \cdot Y) / X$.
+
+  Veel viimane erijuht on võimalus, et Jutal on piisavalt raha, et ta saaks tulesid põlemas hoida isegi rohem kui oma kojujõudmise ja magamaminemise vahelised $9$ tundi. Ülesande tingimuste kohaselt ta seda ei tee ja sel juhul on vastus ikkagi $9$.
+
+  Pythoni programmina võib eelneva loogika kirja panna näiteks nii:
+\begin{lstlisting}[language=Python]
+# loeme sisendandmed
+X = int(input()
+Y = int(input()
+N = int(input() * 100 # eelarve eurodest sentideks
+
+# leiame ja väljastame vastuse
+if X*4 + Y*5 < N: # raha jätkub kojujõudmisest magamaminekuni
+  print(9)
+elif X < Y: # päevane elekter on odavam, kasutame seda maksimaalselt
+  if X*4 > N: # kogu raha kulub päevasel ajal ära
+    print(N/X)
+  else: # raha jätkub kõigiks 4 päevaseks tunniks
+    # leiame, kui palju õhtuks üle jääb
+    varu = N - X*4
+    print(4 + varu/Y)
+else: # õhtune elekter on odavam, kasutame seda maksimaalselt
+  if Y*5 > N: # kogu raha kulub õhtusel ajal ära
+    print(N/Y)
+  else: # raha jätkub kõigiks 5 õhtuseks tunniks
+    # leiame, kui palju päevaks üle jääb
+    varu = N - Y*5
+    print(5 + varu/X)
+\end{lstlisting}
+
+  \clearpage
+  C++ kasutajad võiks kirjutada näiteks nii:
+\begin{lstlisting}[language=C++]
+#include <iostream>
+using namespace std;
+
+int main() {
+  // loeme sisendandmed
+  double x, y, n;
+  cin >> x >> y >> n;
+  x /= 100; y /= 100; // X ja Y sentidest eurodeks
+
+  // leiame ja väljastame vastuse
+  if (4 * x + 5 * y < n) { // raha jätkub kojujõudmisest magamaminekuni
+    cout << 9 << '\n';
+  } else if (x < y) { // päevane elekter on odavam, kasutame seda maksimaalselt
+    if (4 * x > n) { // kogu raha kulub päevasel ajal ära
+      cout << n / x << '\n';
+    } else { // raha jätkub kõigiks 4 päevaseks tunniks
+      // leiame, kui palju õhtuks üle jääb
+      double varu = n - 4 * x;
+      cout << 4 + varu / y << '\n';
+    }
+  } else { // õhtune elekter on odavam, kasutame seda maksimaalselt
+    if (5 * y > n) { // kogu raha kulub õhtusel ajal ära
+      cout << n / y << '\n';
+    } else { // raha jätkub kõigiks 5 õhtuseks tunniks
+      // leiame, kui palju päevaks üle jääb
+      double varu = n - 5 * y;
+      cout << 5 + varu / x << '\n';
+    }
+  }
+}
+\end{lstlisting}
+
+  C++ kasutajatel tuleb lisaks tähelepanu pöörata andmetüüpidele. Kuigi sisendandmed on kõik täisarvud, võivad vahetulemused ja vastused olla ka murdarvud. C++ reeglid ütlevad, et kui \lstinline[language=C++]{A} ja \lstinline[language=C++]{B} on mõlemad täisarvutüüpi, siis tehakse avaldises \lstinline[language=C++]{A/B} täisarvuline jagamine. See tähendab, et vastus on ka alati täisarvutüüpi; kui matemaatiliselt oleks jagatis mingi murdav, siis visatakse murdosa lihtsalt ära. Selle vältmiseks on siin ülesandes kõige lihtsam defineerida kõik muutujad kohe reaalarvutüüpi, nagu oli tehtud ka võistluse serveris antud lahenduse mallis. C++ keeles on \lstinline[language=C++]{double} topelttäpsusega reaalarvutüüp; kui ei ole head põhjust teha midagi muud, võiks kõigi reaalavuliste väärtuste hoidmiseks kasutada seda tüüpi. Lisainfot C++ jagamistehte riskide kohta on ka ülesande ``Paberi voltimine'' lahenduse seletuses.
+\end{yl}

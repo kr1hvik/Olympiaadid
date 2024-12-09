@@ -1,0 +1,32 @@
+\begin{yl}{4}{Koogid}{kook}{1 sekund}{40 punkti}
+  \emph{Idee ja teostus: Kregor Ööbik, lahenduse selgitus: Ahto Truu}
+
+  Peaks olema üsna ilmne, et kui lahendus leidub, siis peavad suuremad koogid minema rohkemate päkapikkudega laudadele. Kõige lihtsam seda saavutada on sorteerida nii koogid kui lauad suuruste järjekorda. Kuna pärast on vaja teada ka laudade ja kookide numbreid, siis on parem lihtsalt suuruste asemel hoida ja sorteerida (suurus, indeks) paare:
+  \begin{lstlisting}[language=Python]
+  p = [int(x) for x in input().split()]
+  p = sorted((x, i) for i, x in enumerate(p))
+  \end{lstlisting}
+
+  Selleks, et kontrollida, kas kõik päkapikud saavad võrdse hulga kooki, võib võrrelda näiteks kõiki teisi (kook, laud) paare esimese (kook, laud) paariga. Ümardamisvigade vältimiseks on parem tingimuse $$\frac{M_a}{P_a} = \frac{M_b}{P_b}$$ asemel kontrollida tingimust $$M_a \cdot P_b = M_b \cdot P_a\;,$$ sest siis on kõik arvutused täisarvudega:
+  \begin{lstlisting}[language=Python]
+  saab = True
+  for i in range(1, n):
+    if m[i][0] * p[0][0] != m[0][0] * p[i][0]:
+      saab = False
+  \end{lstlisting}
+
+  Kui lahendus leidub, siis on kookide laudadele jaotuse leidmiseks üks võimalus käia kookide ja laudade jadad paralleelselt läbi ja panna iga koogi indeksi kohta kirja selle laua indeks:
+  \begin{lstlisting}[language=Python]
+  a = [-1] * n
+  for i in range(n):
+    a[m[i][1]] = p[i][1] + 1
+  print(*a)
+  \end{lstlisting}
+
+  Teine võimalus on koguda kokku kookide indeksid (kookide suuruse järjekorras) ja laudade indeksid (laudade suuruse järjekorras) ja sorteerida need paarid omakorda kookide indeksite järgi:
+  \begin{lstlisting}[language=Python]
+  a = [(m[i][1], p[i][1]) for i in range(n)]
+  print(*(p + 1 for m, p in sorted(a)))
+  \end{lstlisting}
+
+\end{yl}

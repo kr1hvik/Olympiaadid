@@ -1,0 +1,46 @@
+# ST: 0
+# examples
+touch ../input/input0.txt
+touch ../input/input1.txt
+touch ../input/input2.txt
+# ST: 10
+./gen1 0 1371 > ../input/input3.txt
+./gen1 1 1372 > ../input/input4.txt
+./gen1 2 1373 > ../input/input5.txt
+./gen1 0 1374 > ../input/input6.txt
+./gen1 0 1375 > ../input/input7.txt
+./gen1 0 1376 > ../input/input8.txt
+./gen1 3 1377 > ../input/input9.txt
+./gen1 0 1378 > ../input/input10.txt
+./gen1 2 1379 > ../input/input11.txt
+./gen1 1 13710 > ../input/input12.txt
+# ST: 10
+./gen 0 0 0 2000 1000 13711 470 > ../input/input13.txt
+./gen 0 0 1 2000 1000 13712 470 > ../input/input14.txt
+./gen 0 1 0 100000 300 13713 300 > ../input/input15.txt
+./gen 0 0 2 2000 1000 13714 470 > ../input/input16.txt
+./gen 0 0 3 2000 1000 13715 470 > ../input/input17.txt
+./gen 0 1 2 100000 200 13716 200 > ../input/input18.txt
+./gen 0 0 0 10000 1000 13717 100 > ../input/input19.txt 
+./gen 0 1 0 100000 100 13718 100 > ../input/input20.txt
+./gen 0 2 0 100000 10 13719 10000 > ../input/input21.txt
+# ST: 10
+./gen 1 0 0 1000 1000 37 50 > ../input/input22.txt 
+./gen 1 1 0 1000 1000 38 300 > ../input/input23.txt
+./gen 1 0 2 1000 1000 34 50 > ../input/input24.txt
+./gen 1 0 3 1000 1000 35 50 > ../input/input25.txt
+./gen 1 2 0 1000 100 39 10 > ../input/input26.txt
+./gen 1 1 2 1000 1000 36 300 > ../input/input27.txt
+./gen 1 0 0 1000 1000 31 50 > ../input/input28.txt
+./gen 1 0 1 1000 1000 32 50 > ../input/input29.txt
+./gen 1 1 0 1000 1000 33 300 > ../input/input30.txt
+# ST: 10
+./gen 1 1 2 100000 200 13725 200 > ../input/input31.txt
+./gen 1 0 0 10000 1000 13726 100 > ../input/input32.txt 
+./gen 1 1 0 100000 100 13727 100 > ../input/input33.txt
+./gen 1 1 0 100000 300 13722 300 > ../input/input34.txt
+./gen 1 0 2 2000 1000 13723 470 > ../input/input35.txt
+./gen 1 0 3 2000 1000 13724 470 > ../input/input36.txt
+./gen 1 2 0 100000 10 13728 10000 > ../input/input37.txt
+./gen 1 0 0 2000 1000 13720 470 > ../input/input38.txt
+./gen 1 0 1 2000 1000 13721 470 > ../input/input39.txt

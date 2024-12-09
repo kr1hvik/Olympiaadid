@@ -1,0 +1,26 @@
+name: saan
+title: Tasakaalus jõulusaan
+time_limit: 2
+time_limit_interpreted: 10
+memory_limit: 1024
+public_testcases: all
+infile: ''
+outfile: ''
+score_type: GroupMin
+score_mode: max_subtask
+divisions: G
+
+validator: gen/validator
+model_solution: solution/sol_n4_asserts.cpp
+
+solutions:
+  - solution/sol_naive.cpp
+  - solution/sol_basic.cpp
+  - solution/sol_n4.cpp
+  - solution/sol_n4_asserts.cpp
+  - solution/sol_n4_mid.cpp
+  - solution/sol_andres.cpp
+  - solution/wrong_mid_1.cpp
+  - solution/wrong_mid_2.cpp
+  - solution/sol_basic.py
+  - solution/sol_n4.py

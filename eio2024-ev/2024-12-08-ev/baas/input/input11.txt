@@ -1,0 +1,11 @@
+8 10
+aaa baaba abbabba bba bbabaaa bbbbbbaa bbabb aba
+bbbaa abbbaaaa aabbabb bbabbaba abbaa baabbab bbb abbba
+baabaa baabbbaa aababaab bbb baa abbb bbabb bbaa
+aaab aabbabb baaaba baabbbbb aabbbbba ab aaabbab baa
+bbaab aaabbb abbbba bbaabba abaab abaab baaa abbbbaa
+bbbaaab babb aaa ba bba ababbba baabbab aabaaa
+bbaa aaabaabb bbaa aabbbb ba abaabba bbbaba aaabbba
+bb aaaab abaaab aab abbbb aaba aaa bbbbbbbb
+bba bba bbb aabab aabaab aa aabbba ababaaaa
+aabbab bbaba abbbaa bbba bab aaaaba abaaab aaaaaa

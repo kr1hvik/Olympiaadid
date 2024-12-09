@@ -1,0 +1,108 @@
+\begin{yl}{6}{Tasakaalus jõulusaan}{saan}{2 sek / 10 sek}{100 punkti}
+  \emph{Idee: Heno Ivanov, teostus ja lahenduse selgitus: Tähvend Uustalu}
+
+  Alustel $A_1, A_2, \ldots, A_K$ olevate pakkide massikese on $(A_1, A_2, \ldots, A_K) / K$;
+  saani keskpunkt on $(N + 1) / 2$. Seega on saan tasakaalus, kui
+  $$ \frac{A_1 + A_2 + \cdots + A_K}{K} = \frac{N + 1}{2} $$
+  ehk
+  $$ A_1 + A_2 + \cdots + A_K = \frac{K(N + 1)}{2}. $$
+  Näeme, et kui $N$ on paaris ja $K$ on paaritu, siis lahendit olla ei saa:
+  vasak pool on täisarv, parem mitte. Muudel juhtudel leidub vähemalt mingigi
+  tasakaalus konfiguratsioon: pooled kastid vasakusse serva, pooled paremale, kasutades vajaduse
+  korral ka keskmist alust.
+
+  Lahendame ülesande dünaamilise plaanimise abil. Selleks on palju variante, esitame siinkohal
+  ühe. Keskendume minimaalse käikude arvu leidmisele --- võimaluste arvu loendamine tuleb sellest
+  lahendusest loomulikul teel välja. Pakkide ümbertõstmise asemel mõtleme pakkide lisamisest ja
+  eemaldamisest: käime alused vasakult paremale läbi; kaalume igalt aluselt paki eemaldamist
+  (kui sellel hetkel on pakk) ja paki lisamist (kui sellel hetkel pakki ei ole).
+  Lõpplahendis peavad lisatud pakkide ja eemaldatud pakkide arvud muidugi võrdsed olema.
+
+  Hetke olekut peegeldab kolmik $(i, j, S)$, kus:
+  \begin{xitem}
+  \item $i$ on läbi vaadatud aluste arv;
+  \item $j$ on eemaldatud pakkide arvu ja lisatud pakkide arvu vahe;
+  \item $S$ on alustel $1 \ldots i$ olevate pakkide asukohtade summa.
+  \end{xitem}
+
+  Tähistagu $\Dp[i][j][S]$ minimaalset eemaldatud pakkide arvu (või samaväärselt,
+  lisatud pakkide arvu). Alguses seame $\Dp[0][0][0] = 0$ ja iga muu kolmiku korral
+  $\Dp[i][j][S] = \infty$. Nüüd arvutame tabeli varasemate väärtuste põhjal välja
+  hilisemad väärtused.
+  \begin{xitem}
+  \item Iga $i = 1, \ldots, n$ korral:
+    \begin{xitem}
+    \item Iga $j = -n, \ldots, n$ korral:
+      \begin{xitem}
+      \item Iga $S = 0, \ldots, \frac{n (n + 1)}{2}$ korral:
+        \begin{xitem}
+        \item Kui alusel $i$ on pakk:
+          \begin{xitem}
+          \item Seame $\Dp[i][j][S + i] \gets \min(\Dp[i][j][S + i], \Dp[i - 1][j][S])$.
+            (Kaalume mitte millegi tegemist ehk paki alusele jätmist. See viiks meid
+            olekust $(i - 1, j, S)$ olekusse $(i, j, S + i)$: ühtegi pakki ei eemaldatud ega
+            lisatud, aga pakkide asukohtade summa, mis arvestab nüüd ka alusega $i$, kasvab $i$
+            võrra. Miinimumi võtame sellepärast, et tabelis võib juba ees olla parem
+            lahend sama oleku jaoks.)
+          \item Seame $\Dp[i][j + 1][S] \gets \min(\Dp[i][j + 1][S], \Dp[i - 1][j][S])$.
+            (Kaalume aluselt paki eemaldamist; see viiks meid olekust $(i - 1, j, S)$ olekusse
+            $(i, j + 1, S)$ --- eemaldatud pakkide arv kasvab ühe võrra, asukohtade summa jääb
+            samaks.)
+          \end{xitem}
+        \item Kui alusel $i$ pakki pole:
+          \begin{xitem}
+          \item Seame $\Dp[i][j][S] \gets \min(\Dp[i][j][S], \Dp[i - 1][j][S]$ (kaalume mitte
+            millegi tegemist).
+          \item Seame $\Dp[i][j - 1][S + i] \gets \min(\Dp[i][j - 1][S + i], \Dp[i - 1][j][S] + 1)$
+            (kaalume alusele paki panemist).
+          \end{xitem}
+        \end{xitem}
+      \end{xitem}
+    \end{xitem}
+  \end{xitem}
+
+  Lõppvastus on tabeli lahtris $\Dp[N][0][K (N + 1) / 2]$. Selline lahendus muidu töötab,
+  aga siin on mõned nüansid.
+
+  Esiteks on $91 \times 181 \times 4096$ tabel päris suur. Mälulimiiti mahub see küll, aga
+  nii suure \texttt{array} või \texttt{vector} loomine võib ebaõnnestuda. Selle probleemi
+  lahendamiseks piisab tähele panna, et meil ei ole vaja tervet tabelit meeles hoida.
+  Vaja on ainult praeguse $i$ ja $i - 1$ tabelit.
+
+  Teiseks on vaja tabelis kasutada negatiivseid indekseid. Selleks on mitu moodust; žürii
+  lahenduses on see lahendatud nii:
+  \begin{lstlisting}
+template<typename T>
+class OffsetArray {
+  int offset;
+  vector<T> vec;
+
+public:
+  OffsetArray (int _size, int _offset, T init) :
+    offset(_offset), vec(_size, init) { }
+
+  T& operator[] (int index) {
+    return vec[offset + index];
+  }
+};
+  \end{lstlisting}
+  Siis \texttt{OffsetArray<int>(n, m, 0)} loob massiivilaadse toote, mis on alguses täidetud
+  nullidega ja milles on kasutatavad indeksid $-m \ldots n - m - 1$.
+
+  Esimene pool ülesandest --- tõstmiste arvu minimeerimine --- on seega lahendatud keerukusega $O(N^4)$.
+  Siia tuleb nüüd lisada võimaluste loendamine. Selleks peame iga oleku kohta meeles,
+  mitu võimalust on minimaalse sammude arvuga selle oleku juurde jõuda. Teeme teise tabeli:
+  $\mathrm{ways}[i][j][S]$ loendab, mitu võimalust $\Dp[i][j][S]$ käiguga olekusse $(i, j, S)$
+  jõudmiseks on juba leitud.
+  Seda tabelit uuendame koos tabeliga $\Dp$. Oletame näiteks, et alusel $i$ on pakk ja kaalume mitte
+  millegi tegemist. Ülalolev algoritm teeb siis
+  $\Dp[i][j][S + i] \gets \min(\Dp[i][j][S + i], \Dp[i - 1][j][S])$. Enne seda uuendame tabelit
+  $\mathrm{ways}$:
+  \begin{xitem}
+  \item kui $\Dp[i - 1][j][S] < \Dp[i][j][S + i]$, siis \textbf{seame} $\mathrm{ways}[i][j][S + i]$
+    väärtuseks $\mathrm{ways}[i - 1][j][S]$;
+  \item kui $\Dp[i - 1][j][S] = \Dp[i][j][S + i]$, siis \textbf{liidame} $\mathrm{ways}[i][j][S + i]$
+    väärtusele $\mathrm{ways}[i - 1][j][S]$;
+  \item kui $\Dp[i - 1][j][S] > \Dp[i][j][S + i]$, siis ei tee me midagi.
+  \end{xitem}
+\end{yl}

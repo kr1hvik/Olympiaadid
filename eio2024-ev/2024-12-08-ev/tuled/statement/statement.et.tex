@@ -1,0 +1,43 @@
+% Idee: Sandra Schumann
+% Teostus: Sandra Schumann
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+\begin{ol}{\eio}{\ev 8.12.2024}{\yle}{}
+\begin{yl}{1}{Jõulutuled}{tuled}{1 sekund}{10 punkti}
+
+Juta ehtis oma maja üleni jõulutuledega. Need on küll ilusad, aga kulutavad palju elektrit. Jutal on raha vähe, aga ta tahab tulesid töös hoida nii kaua kui vähegi võimalik.
+
+Juta veidras elektripaketis maksab tulede tööshoidmine kella 6:00 ja 18:00 vahel $X$ senti tunnis ning kella 18:00 ja 6:00 vahel $Y$ senti tunnis. Juta ei taha tulesid tööle panna enne kella 14:00, sest siis on ta koolis, ja tahab need kustutada hiljemalt kell 23:00, sest siis läheb ta magama. Ühe päeva jooksul on Jutal võimalik tulede tööshoidmisele kulutada kõige rohkem $N$ eurot. Leia, mitu tundi (maksimaalselt) saab Juta tulesid ühe päeva jooksul töös hoida.
+
+\sis
+Sisendi esimesel real on täisarv $X$ ($1 \le X \le 1\,000$), mis näitab, mitu senti tunnis maksab tulede tööshoidmine ajavahemikus 6:00 kuni 18:00.
+
+Teisel real on täisarv $Y$ ($1 \le Y \le 1\,000$), mis näitab, mitu senti tunnis maksab tulede tööshoidmine ajavahemikus 18:00 kuni 6:00.
+
+Kolmandal real on täisarv $N$ ($1 \le N \le 100$), mis näitab, mitu eurot on Jutal võimalik maksimaalselt ühe päeva jooksul tulede tööshoidmisele kulutada.
+
+\val
+Väljastada üks arv, mis näitab, mitu tundi saab Juta tulesid ühe päeva jooksul töös hoida. Pane tähele, et see ei tarvitse olla täisarv. Kui õige vastus on murdarv (``komaga arv''), siis tuleks see nii ka väljastada (vaata ka näidet). Väljastatud vastus ei tohi õigest vastusest erineda rohkem kui $0,005$ võrra.
+
+\nde[0]{3cm}{3cm}
+
+Kui Juta paneb tuled põlema mõned minutid enne kella 16:00, nii, et tuled põlevad $2,05556$ tundi hinnaga $90$ senti tunnis ja seejärel $5$ tundi hinnaga $63$ senti tunnis, siis kulutab ta ära $2,05556 \cdot 90 + 5 \cdot 63 \approx 500$ senti ehk $5$ eurot, hoides tulesid põlemas kokku $7,05556$ tundi. Pikemalt ei ole Jutal võimalik tulesid põlemas hoida.
+
+\nde[1]{3cm}{3cm}
+
+Juta saab tulesid põlemas hoida $9$ tundi, koolist koju jõudmisest kuni magama minemiseni, sest see kulutab kokku vaid $68$ senti. Ülejääva raha võib Juta kulutada jõulukinkidele.
+
+\hnd
+Selles ülesandes antakse punkte iga testi eest eraldi. Testid on jagatud gruppidesse, milles kehtivad järgmised lisatingimused:
+\begin{xenum}
+	\item (0 punkti) Ülesande tekstis olevad näited. Nende lahendamise eest punkte ei saa, aga nende hindamise tulemustest on näha, kas programm töötab serveris testides õigesti.
+	\item (5 punkti) Vastus on täisarv.
+	\item (5 punkti) Lisapiirangud puuduvad.
+\end{xenum}
+
+\end{yl}
+\end{ol}
+\end{document}

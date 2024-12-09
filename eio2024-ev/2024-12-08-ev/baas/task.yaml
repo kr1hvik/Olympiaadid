@@ -1,0 +1,11 @@
+name: baas
+title: Kingituste andmebaas
+time_limit: 5
+time_limit_interpreted: 10
+memory_limit: 512
+public_testcases: all
+infile: ''
+outfile: ''
+score_type: GroupMin
+score_mode: max_subtask
+divisions: G

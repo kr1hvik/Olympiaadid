@@ -1,0 +1,47 @@
+% Idee: Tähvend Uustalu
+% Teostus: Birgit Veldi
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+\begin{ol}{\eio}{\ev 8.12.2024}{\yle}{}
+\begin{yl}{2}{Sokid}{sokid}{1 sekund}{20 punkti}
+
+Juku vanavanemad armastavad talle jõuludeks sokke kinkida. Sellepärast on Jukul kogunenud sahtlisse palju sokke. Mõned sokid on aja jooksul ka ära kadunud.
+
+Praegu on Jukul sokisahtel sassis: kõik sokid on paari panemata. Juku ema saaks seda nähes väga pahaseks ning ütleks päkapikkudele, et Jukule ei tohiks kommi tuua.
+Juku tahab aga olla hea laps ning ema kojutulekuks kõik sokid paari panna.
+Kaks sokki saab paari panna siis, kui need on sama värvi. Selleks otsustab Juku osad sokid üle värvida.
+Kuna aega on vähe, tahab ta üle värvida võimalikult vähe sokke.
+
+Leia, mitu sokki tuleks Jukul üle värvida, et nad kõik paari panna.
+
+\sis
+Sisendi esimesel real on täisarv $N$ ($1 \le N \le 100\,000$): sokkide arv sahtlis.
+
+Järgmisel $N$ real on igaühel kirjas ühe soki värv ($1$ kuni $20$ väikest ladina tähte).
+
+\val
+Väljastada üks täisarv: mitu sokki peab Juku minimaalselt ära värvima, et kõik sokid paaridesse jaotada. Kui sokkide paaridesse jaotamine pole võimalik, siis väljastada $-1$.
+
+\nde[0]{3cm}{3cm}
+
+Kui Juku värviks näiteks punase soki kollaseks, saaks ta kollaste ja siniste sokkide paarid.
+
+\nde[1]{3cm}{3cm}
+
+Kolme sokki ei saa kuidagi paaridesse jaotada.
+
+\hnd
+Selles ülesandes antakse punkte iga testi eest eraldi. Testid on jagatud gruppidesse, milles kehtivad järgmised lisatingimused:
+\begin{xenum}
+	\item (0 punkti) Ülesande tekstis olevad näited. Nende lahendamise eest punkte ei saa, aga nende hindamise tulemustest on näha, kas programm töötab serveris testides õigesti.
+	\item (6 punkti) Iga soki värv on üks järgnevatest: \verb/punane/, \verb/kollane/, \verb/roheline/, \verb/sinine/.
+	\item (10 punkti) $N \le 1\,000$.
+	\item (4 punkti) Lisapiirangud puuduvad.
+\end{xenum}
+
+\end{yl}
+\end{ol}
+\end{document}

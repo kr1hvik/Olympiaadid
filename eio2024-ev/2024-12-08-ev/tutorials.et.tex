@@ -1,0 +1,73 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{eio}
+\usepackage{amsthm}
+\usepackage{subfig}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+
+\usepackage{csquotes}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{patterns}
+
+\lstset{language=C++,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{purple}\ttfamily,
+  commentstyle=\color{red}\ttfamily,
+  breaklines = true,
+  extendedchars = true,
+  inputencoding = utf8,
+  literate = {õ}{{\~o}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 
+}
+
+% magic that is prepended to the yl and ylx environments
+% this makes problem titles appear in the table of contents
+% without having to specify problem titles in multiple places
+\usepackage{xpatch}
+\xpretocmd{\yl}{\phantomsection\addcontentsline{toc}{section}{#1. #2}}{}{}
+\xpretocmd{\ylx}{\phantomsection\addcontentsline{toc}{section}{#1. #2}}{}{}
+
+\newcommand{\problemtutorial}[1]{
+  \graphicspath{{#1/tutorial/}}
+  \include{#1/tutorial/tutorial.et}
+}
+
+% saan
+\newcommand{\Dp}{\mathrm{dp}}
+
+\usepackage{enumitem}
+\setlistdepth{9}
+
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\bullet$}
+\setlist[itemize,3]{label=$\bullet$}
+\setlist[itemize,4]{label=$\bullet$}
+\setlist[itemize,5]{label=$\bullet$}
+\setlist[itemize,6]{label=$\bullet$}
+\setlist[itemize,7]{label=$\bullet$}
+\setlist[itemize,8]{label=$\bullet$}
+\setlist[itemize,9]{label=$\bullet$}
+
+\renewlist{itemize}{itemize}{9}
+
+\newlength{\colwidth}
+\setlength{\colwidth}{0.5\textwidth}
+\addtolength{\colwidth}{-5mm}
+
+\begin{document}
+
+\begin{ol}{\eio}{\ev 8.12.2024}{\lah}{}
+  \tableofcontents
+
+  \problemtutorial{tuled}
+  \problemtutorial{sokid}
+  \problemtutorial{volt}
+  \problemtutorial{kook}
+  \problemtutorial{baas}
+  \problemtutorial{saan}
+\end{ol}
+
+\end{document}

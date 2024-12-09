@@ -1,0 +1,15 @@
+# ST: 0
+touch ../input/input0.txt
+touch ../input/input1.txt
+# ST: 5
+touch ../input/input2.txt
+touch ../input/input3.txt
+touch ../input/input4.txt
+touch ../input/input5.txt
+touch ../input/input6.txt
+# ST: 5
+touch ../input/input7.txt
+touch ../input/input8.txt
+touch ../input/input9.txt
+touch ../input/input10.txt
+touch ../input/input11.txt

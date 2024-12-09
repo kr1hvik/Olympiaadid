@@ -1,0 +1,131 @@
+\begin{yl}{5}{Kingituste andmebaas}{baas}{5 sek / 10 sek}{60 punkti}
+  \emph{Idee ja teostus: Heno Ivanov, lahenduse selgitus: Tähvend Uustalu}
+
+  Olgu antud mingi nimekiri sõnedest.
+  \emph{Trie'ks} nimetatakse andmestruktuuri, milles on tipp iga sõne kohta, mis
+  on mõne nimekirjas oleva sõne prefiks. Sõnele $s$ vastavast tipust on tähega $c$ märgistatud serv sõnele $t$
+  vastavasse tippu, kui sõnele $s$ tähe $c$ lõppu lisamise annab sõne $t$.
+
+  Näiteks vastab nimekirjale ``piim'', ``pidu'', ``asi'', ``appi'' alltoodud trie.
+
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{scope}[every node/.style={circle, draw, minimum size=10pt}]
+        \node (root) at (0, 0) {};
+        \node (p) at (1, -1) {};
+        \node (pi) at (1, -2) {};
+        \node (pid) at (0, -3) {};
+        \node (pidu) at (0, -4) {};
+        \node (pii) at (2, -3) {};
+        \node (piim) at (2, -4) {};
+        \node (a) at (-1, -1) {};
+        \node (ap) at (-2, -2) {};
+        \node (app) at (-2, -3) {};
+        \node (appi) at (-2, -4) {};
+        \node (as) at (-1, -2) {};
+        \node (asi) at (-1, -3) {};
+      \end{scope}
+      \begin{scope}[>={Stealth[black]},
+          every node/.style={fill=white,circle,scale=0.5}]
+        \draw[->] (root) -- (p) node[midway] {p};
+        \draw[->] (p) -- (pi) node[midway] {i};
+        \draw[->] (pi) -- (pid) node[midway] {d};
+        \draw[->] (pid) -- (pidu) node[midway] {u};
+        \draw[->] (pi) -- (pii) node[midway] {i};
+        \draw[->] (pii) -- (piim) node[midway] {m};
+        \draw[->] (root) -- (a) node[midway] {a};
+        \draw[->] (a) -- (ap) node[midway] {p};
+        \draw[->] (ap) -- (app) node[midway] {p};
+        \draw[->] (app) -- (appi) node[midway] {i};
+        \draw[->] (a) -- (as) node[midway] {s};
+        \draw[->] (as) -- (asi) node[midway] {i};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+
+  Üks viis trie ja sellesse sõne lisamise realiseerimiseks on järgmine:
+
+  \begin{lstlisting}
+struct Node { // tipp
+  map<char, Node> next;
+};
+
+void add_word(Node & root, const string & word) {
+  Node *curr = &root;
+  for (auto c : word) {
+    // next[c] poole pöördumine lisab uue elemendi,
+    // kui seda veel olemas ei ole
+    curr = &curr->next[c];
+  }
+}
+\end{lstlisting}
+
+  Mõtleme ülesandest nii: tries on sõnele vastav tipp parajasti siis, kui ta on prefiks vähemalt ühele
+  sõnale, millest trie moodustatud on. Kui me ehitame iga lapse kingisoovidest trie, siis
+  otsime pikimat sõnet, millele vastav tipp leidub igas tries. Teisisõnu otsime sügavaimat tippu
+  kõikide triede ühisosas.
+
+  Kahe trie ühisosa saab leida näiteks nii:
+  \begin{lstlisting}
+// märk '&' tüübi järel tähendab, et funktsioon saab argumendiks antud
+// struktuuri aadressi ja andmetest koopiat ei tehta
+Node intersect(Node & a, Node & b) {
+  Node res;
+  for (auto & [c, _] : a.next) {
+    // käime läbi kõik tipu a alluvad; kui tipul b on ka sama tähega alluv,
+    // siis arvutame rekursiivselt nende alampuude ühisosa ja lisame selle
+    // ühisosa-triesse
+    if (b.next.contains(c)) {
+      res.next[c] = intersect(a.next[c], b.next[c]);
+    }
+  }
+  return res;
+}
+  \end{lstlisting}
+
+  Tähelepanu tuleb pöörata ka mälulimiidile. Kuigi see on antud ülesandes 512~MB --- suurem kui harilik
+  256~MB --- võib hooletu lahendus ka seda ületada.
+  Sisendi maksimaalne maht on 64~MB ehk kingisoovide pikkuste summa võib olla kuni $64 \cdot 2^{20}$.
+  Seega, kui iga lapse kingisoovidest ehitada trie ja kõik need tried samaaegselt mälus on,
+  võib nendel triedel ka kokku olla $64 \cdot 2^{20}$ tippu. Kui iga tipp võtab näiteks 10 baiti,
+  siis ongi juba 640~MB kulutatud (ja 512~MB piir ammu ületatud).
+  Üks lahendus on alati hoida meeles globaalset ühisosa-triet, aga iga lapse triet vaid ühes iteratsioonis.
+  \begin{lstlisting}
+Node file_trie;
+for (int i = 0; i < n; ++i) {
+  // line_trie on deklareeritud ploki sees - see tähendab, et iga line_trie
+  // kustutatakse kohe, kui iteratsioon on läbi, ja järgmiseks iteratsiooniks
+  // tehakse uus tühi trie
+  Node line_trie;
+  for (int j = 0; j < m; ++j) {
+    string word;
+    cin >> word;
+    add_word(line_trie, word);
+  }
+  if (i == 0) {
+    file_trie = line_trie;
+  } else {
+    file_trie = intersect(file_trie, line_trie);
+  }
+}
+\end{lstlisting}
+
+\textit{Alternatiivne lahendus: Marko Tsengov}
+
+Oletame, et me teame päringuks olnud sõne pikkust $\ell$.
+Sellisel juhul saame tulemused rida-rea haaval läbi käia ning hoida meeles, millised võimalikud päringud eelnevate ridade põhjal olla võisid.
+Iga uue rea puhul saame leida päringud, mis just sellele reale oleks sobinud, ning leida kõigi seni sobinud (iga sõne vastava pikkusega prefiks) ja sellele reale sobinud päringute ühisosa.
+Sellise jooksva ühisosa meeles hoidmiseks sobib hästi hulga (\textit{set}) andmestruktuur, kust saab kiiresti (keerukusega $O(1)$ või $O(\log N)$) elemente pärida ning kustudada.
+
+Et esimesel real on $M$ sõnet, peame korraga meeles hoidma kuni $M$ erinevat päringut, kuna ridade kaupa edasi minnes saab sobivaid päringuid ainult vähemaks jääda.
+Ühisosa uuendamiseks võime kõik eelnevate ridade jaoks sobinud päringud läbi käia ning kontrollida, kas need sobivad ka uuele reale.
+Et sel real oli niikuinii juba $M$ sõnet, mille sisselugemiseks kulus $M$ operatsiooni, pole nende kõigi kohta hulka kuuluvuse kontrollimine sellega võrreldes kuigi aeganõudev.
+Seega saame sobivad päringud leida kogu andmestikku vaid ühe korra läbides.
+
+Siiski peame veel parandama asjaolu, et me ei tea $\ell$ väärtust.
+Märkame, et kui pakume reaalsest väärtusest suurema pikkuse, siis eelolev algoritm töötab, kuid lõpuks ei leia ühtki sobivat päringut.
+Samuti märkame, et kui pakume reaalsest väärtusest väiksema pikkuse, siis sama algoritm endiselt töötab, tagastades õige päringu vastava pikkusega prefiksi.
+
+Eeltoodud omaduste põhjal saame $\ell$ väärtuse leida kahendotsingu abil või --- kuna lubatud sõnede pikkus on võrdlemisi väike --- ka iteratiivselt, proovides järjest suuremaid väärtusi, kuni sobivat päringut enam ei leidu.
+
+\end{yl}

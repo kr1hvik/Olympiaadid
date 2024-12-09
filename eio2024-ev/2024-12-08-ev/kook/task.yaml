@@ -1,0 +1,25 @@
+name: kook
+title: Koogid
+time_limit: 1
+memory_limit: 256
+public_testcases: all
+infile: ''
+outfile: ''
+score_type: GroupMin
+score_mode: max_subtask
+score_precision: 1
+
+validator: gen/validator
+model_solution: solution/sol.cpp
+
+solutions:
+  - solution/sol_jah_ei.cpp
+  - solution/sol_jah_ei.py
+  - solution/sol1.cpp
+  - solution/sol1.py
+  - solution/sol2.cpp
+  - solution/sol2.py
+  - solution/sol3.cpp
+  - solution/sol3.py
+  - solution/sol.cpp
+  - solution/sol.py

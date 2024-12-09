@@ -1,0 +1,94 @@
+% Idee: Heno Ivanov
+% Tekst: Tähvend Uustalu
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+
+\begin{ol}{\eio}{\ev 8.12.2024}{\yle}{}
+  \begin{yl}{6}{Tasakaalus jõulusaan}{saan}{2 sek / 10 sek}{100 punkti}
+    Jõuluvana toob teatavasti headele lastele kingitusi saanis, mida veavad lendavad põhjapõdrad.
+    Saan on $N$ meetrit lai ja koosneb $N$ alusest, millest igaühele võib olla asetatud ülimalt üks kingipakk.
+    Alused on nummerdatud $1 \ldots N$ vasakult paremale.
+    Põhjapõdrad on ühendatud saani keskpunktiga (vt. joonist).
+    Nagu näha, on saan väga lai, aga mitte eriti pikk; seega on oht, et kui saanil olevad kingipakid
+    ei ole hoolikalt paigutatud, siis võib saan lennu ajal ümber minna.
+
+    \begin{center}
+      \includegraphics[width=12cm]{fig.pdf}
+    \end{center}
+
+    Ütleme, et saan on tasakaalus, kui kingipakkide massikese on täpselt saani keskel; võib
+    eeldada, et kõik kingipakid kaaluvad sama palju (kingitused on pakitud standardkonteineritesse, mis
+    on palju raskemad kui kingitused ise).
+    Hetkel ongi saanil $K$ kingipakki, mis asuvad alustel $A_1, A_2, \ldots, A_K$. Sinu ülesanne on need
+    pakid ümber paigutada nii, et saan oleks tasakaalus. Kuna pakid on väga rasked, soovid sa seda teha nii,
+    et muudad võimalikult väheste pakkide asukohta.
+
+    Pärast selle ülesande lahendamist hakkas sul igav, nii et otsustasid lisaks veel üle lugeda, kui mitu võimalust
+    on pakid nii ümber paigutada, et võimalikult vähesed pakid asukohta muudavad ja saan pärast seda tasakaalus on.
+    Kaks ümberpaigutust loetakse
+    erinevaks, kui leidub alus, millel ühel ümberpaigutusel on pakk ja teisel ei ole.
+
+    \sis Sisendi esimesel real on kaks täisarvu $N$ ja $K$ ($1 \le K \le N \le 90$) --- vastavalt saani laius ja
+    täidetud aluste arv. Sisendi teisel real on $K$ täisarvu $A_1, A_2, \ldots, A_K$
+    ($1 \le A_1 < A_2 < \cdots < A_K \le N$) --- kingipakkide asukohad.
+
+    \val Väljastada eraldi ridadele kaks täisarvu: minimaalne pakkide arv, mis tuleb ümber paigutada, et
+    saan oleks tasakaalus, ja võimalike ümberpaigutuste arv. Testid on koostatud niimoodi, et võimalike
+    ümberpaigutuste arv, mille korral saan tasakaalus on ja võimalikult vähesed pakid asukohta muudavad,
+    ei ületa $10^{18}$.
+
+    Kui pakke ei ole võimalik ümber paigutada nii, et saan on tasakaalus, siis väljasta esimesel reale $-1$
+    ja teisele $0$.
+
+    \nde[0]{5cm}{3cm}
+
+    See näide vastab ülal vasakul olevale joonisele.
+    Saani tasakaalustamiseks võib kohal 3 oleva paki tõsta kohale 6.
+    Siis on pakid kohtadel 1, 5 ja 6 ning nende massikese kohal $(1 + 5 + 6) / 3 = 4$.
+    Teine võimalus on tõsta kohal 1 olev pakk kohale 4. Siis on pakid kohtadel 3, 4 ja 5
+    ning nende massikese jälle kohal 4.
+
+    \nde[1]{5cm}{3cm}
+
+    See näide vastab ülal paremal olevale joonisele.
+    Selles näites ei ole võimalik pakke ümber tõsta nii, et saan tasakaalus oleks.
+    (Selleks peaks pakkide massikese olema kohal $2,5$.)
+
+    \nde[2]{5cm}{3cm}
+
+    Selles näites on saan juba tasakaalus, midagi ümber tõsta ei ole vaja. 
+
+    \nde[3]{5cm}{3cm}
+
+    Võimalikud pakkide lõppseisud on \verb/3 4 5 6/, \verb/2 4 5 7/, \verb/2 3 6 7/, \verb/1 4 6 7/,
+    \verb/2 3 5 8/, \verb/1 4 5 8/, \verb/1 3 6 8/ ja \verb/1 2 7 8/. Võib veenduda, et kõigis neis
+    lõppseisudes asub massikese kohal $4,5$ ja et kõik need lõppseisud erinevad algseisust täpselt kahe
+    paki asukoha võrra.
+
+    \nde[4]{5cm}{3cm}
+
+    \nde[5]{5cm}{3cm}
+
+    \nde[6]{5cm}{3cm}
+
+    \nde[7]{5cm}{3cm}
+
+    \hnd Selles ülesandes on testid jagatud gruppidesse. Iga grupi eest saavad punkte
+    ainult need lahendused, mis läbivad \textbf{kõik} sellesse gruppi kuuluvad
+    testid. Gruppides kehtivad järgmised lisatingimused:
+
+    \begin{xenum}
+    \item (0 punkti) Näited.
+    \item (40 punkti) $N \le 20$.
+    \item (45 punkti) $N \le 40$.
+    \item (15 punkti) Lisapiirangud puuduvad.
+    \end{xenum}
+
+    Selles ülesandes on lahendustel lubatud tavapärase 256~MB asemel kasutada kuni 1~GB mälu.
+  \end{yl}
+\end{ol}
+
+\end{document}

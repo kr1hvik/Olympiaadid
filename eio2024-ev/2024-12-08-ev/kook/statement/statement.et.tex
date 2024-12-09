@@ -1,0 +1,57 @@
+% Idee: Kregor Ööbik
+% Tekst: Kregor Ööbik
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+
+\begin{ol}{\eio}{\ev 8.12.2024}{\yle}{}
+  \begin{yl}{4}{Koogid}{kook}{1 sekund}{40 punkti}
+    Päkapikud nägid kinkide valmistamisega palju vaeva ning jõuluvana otsustas nende tänamiseks peo korraldada. Peol on päkapikud jaotatud istuma $N$ laua taha. Samuti on jõuluvana valmistanud $N$ kooki. Nii lauad kui koogid on nummerdatud $1 \ldots N$. Lauas nr $i$ istub $P_i$ päkapikku ning kook nr $i$ kaalub $M_i$ grammi. Jõuluvana plaanib igasse lauda viia ühe koogi. Lauas istuvad päkapikud jagavad koogi võrdse kaaluga tükkideks ja iga päkapikk saab ühe koogitüki.
+
+    Jõuluvana soovib, et erinevates laudades istuvad päkapikud ei läheks omavahel tülli. Selleks tahab ta koogid jagada laudadesse nii, et kõik peole kutsutud päkapikud saaksid võrdse kaaluga koogitükid. Aita jõuluvanal kindlaks teha, kas see on võimalik. Juhul kui see on võimalik, siis soovib jõuluvana ka teada, millisesse lauda tuleks iga kook viia.
+
+    \sis Sisendi esimesel real on täisarv $N$ ($2 \le N \le 100\,000$).
+
+    Sisendi teisel real on $N$ täisarvu $P_1, P_2, \ldots, P_N$ ($1 \le P_i \le 1\,000$).
+
+    Sisendi kolmandal real on $N$ täisarvu $M_1, M_2, \ldots, M_N$ ($1 \le M_i \le 1\,000$).
+
+    \val Väljundi esimesele reale väljastada kas ``\verb/JAH/''~või ``\verb/EI/''~(ilma jutumärkiteta) vastavalt sellele, kas jõuluvana soovitud viisil on võimalik kooke laudadesse jagada.
+
+    Jaatava vastuse korral väljastada teisele reale $N$ tühikutega eraldatud täisarvu $A_1, A_2, \ldots, A_N$, kus $A_i$ on laua number, kuhu kook nr $i$ tuleks viia.
+
+    Kui on mitu erinevat viisi korrektselt kooke laudadesse jagada, väljastada ükskõik milline neist.
+
+    \nde[0]{5cm}{3cm}
+
+    Selles näites saab koogi nr $1$, mis kaalub $50$ grammi, viia lauda nr $2$, kus istub $20$ päkapikku. Sel juhul saab iga lauas nr $2$ istuv päkapikk $50 \div 20 = 2,5$ grammi kooki. Koogi nr $2$ saab viia lauda nr $1$. Sel juhul saavad ka lauas nr $1$ istuvad päkapikud igaüks $40 \div 16 = 2,5$ grammi kooki. Kuna lauas nr $1$ istuvad päkapikud ja lauas nr $2$ istuvad päkapikud saavad võrdse kaaluga koogitükid, siis tüli ei teki.
+
+    \nde[1]{5cm}{3cm}
+
+    Selles näites istub igas lauas ühepalju päkapikke ning sõltumata sellest, kuidas kooke laudadesse jagada, saavad ühes lauas istuvad päkapikud $6$ grammi ning kahes ülejäänud lauas istuvad päkapikud $5$ grammi kooki. Seega pole võimalik kooke  selliselt laudadesse jagada, et kõik päkapikud saaksid võrdse kaaluga koogitükid.
+
+    \nde[2]{5cm}{3cm}
+
+    \clearpage
+    
+    \hnd Selles ülesandes on testid jagatud gruppidesse.
+
+    Iga grupi eest saavad täispunktid need lahendused, mis leiavad \textbf{kõikides} gruppi kuuluvates testides õigesti, kas kooke on võimalik soovitud viisil laudadesse jagada, ning iga jaatava vastuse korral väljastavad ka korrektse kookide jaotuse.
+
+    Lahendused, mis vastavad \textbf{kõikides} gruppi kuuluvates testides õigesti küsimusele, kas kooke on võimalik soovitud viisil laudadesse jagada, kuid ei väljasta mõne jaatava vastuse korral korrektset kookide jaotust, saavad veerandi selle grupi punktidest.
+
+    Gruppides kehtivad järgmised lisatingimused:
+
+    \begin{xenum}
+    \item (0 punkti) Ülesande tekstis olevad näited.
+    \item (10 punkti) $N = 2$.
+    \item (10 punkti) $P_1 \le P_2 \le \ldots \le P_N$ ja $M_1 \le M_2 \le \ldots \le M_N$.
+    \item (10 punkti) $N \le 1\,000$.
+    \item (10 punkti) Lisapiirangud puuduvad.
+    \end{xenum}
+  \end{yl}
+\end{ol}
+
+\end{document}

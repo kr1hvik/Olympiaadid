@@ -1,0 +1,341 @@
+%%
+%% Stiilifail Eesti informaatikaolümpiaadide materjalide vormistamiseks
+%%
+
+\ProvidesPackage{eio}
+\NeedsTeXFormat{LaTeX2e}
+
+%%
+%% Toetame eesti, vene ja inglise keelt
+%%
+
+\newif\ifeio@et
+\newif\ifeio@ru
+\newif\ifeio@en
+
+\DeclareOption{et}{\eio@ettrue}
+\DeclareOption{ru}{\eio@rutrue}
+\DeclareOption{en}{\eio@entrue}
+
+\ProcessOptions
+
+%%
+%% Esimesena tuleb laadida vähemalt inputenc
+%%
+
+\RequirePackage[utf8]{inputenc}
+\ifeio@et
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage[estonian]{babel}
+  \RequirePackage{icomma}
+\fi
+\ifeio@ru
+  \RequirePackage[T2A]{fontenc}
+  \RequirePackage[russian]{babel}
+  \RequirePackage{icomma}
+\fi
+\ifeio@en
+  \RequirePackage[english]{babel}
+\fi
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{verbatim}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\ifx\pdftexversion\undefined
+  \RequirePackage[dvips]{graphics}
+\else
+  \RequirePackage[pdftex]{graphics}
+\fi
+\RequirePackage{graphicx}
+\RequirePackage{wrapfig}
+\RequirePackage{lastpage}
+
+%%
+%% Tõlgitavad tekstid
+%%
+
+\ifeio@et
+  \newcommand{\eio}{Eesti informaatikaolümpiaad}
+  \newcommand{\hv}{Harjutusvoor }
+  \newcommand{\lv}{Lahtine võistlus }
+  \newcommand{\kv}{Koolivoor }
+  \newcommand{\pv}{Piirkonnavoor }
+  \newcommand{\ev}{Eelvoor }
+  \newcommand{\fv}{Lõppvoor }
+  \newcommand{\vv}{Valikvoor }
+  \newcommand{\lp}{Loengupäev }
+  \newcommand{\yld}{Üldjuhend}
+  \newcommand{\juh}{Võistlusjuhend}
+  \newcommand{\yle}{Ülesanded}
+  \newcommand{\lah}{Lahenduste selgitused}
+  \newcommand{\pqh}{Põhikooli rühm}
+  \newcommand{\gym}{Gümnaasiumi rühm}
+  \newcommand{\eda}{Edasijõudnute rühm}
+  \newcommand{\har}{Harjutamiseks}
+  \newcommand{\sisplk}{Sisend}
+  \newcommand{\valplk}{Väljund}
+  \newcommand{\sistekst}{Sisend. }
+  \newcommand{\valtekst}{Väljund. }
+  \newcommand{\suhttekst}{Suhtlus. }
+  \newcommand{\ndetekst}{Näide. }
+  \newcommand{\hndtekst}{Hindamine. }
+  \newcommand{\mrktekst}{Märkus. }
+  \newcommand{\alatekst}{Alamülesanne}
+  % praegu enam ei kasutata, säilitatud ainult vanade materjalide jaoks
+  \newcommand{\alg}{Algajate rühm}
+\fi
+\ifeio@ru
+  \newcommand{\eio}{Эстонская олимпиада по информатике}
+  \newcommand{\hv}{Тренировочный тур }
+  \newcommand{\lv}{Открытые соревнования }
+  \newcommand{\kv}{Школьный тур }
+  \newcommand{\pv}{Региональный тур }
+  \newcommand{\ev}{Предварительный тур }
+  \newcommand{\fv}{Финальный тур }
+  \newcommand{\vv}{Отборочный тур }
+  \newcommand{\lp}{Лекционный день }
+  \newcommand{\yld}{Общее руководство}
+  \newcommand{\juh}{Руководство соревнования}
+  \newcommand{\yle}{Задания}
+  \newcommand{\pqh}{Группа основной школы}
+  \newcommand{\gym}{Группа гимназии}
+  \newcommand{\eda}{Группа преуспевших}
+  \newcommand{\har}{Пробные}
+  \newcommand{\sisplk}{Входные данные}
+  \newcommand{\valplk}{Выходные данные}
+  \newcommand{\sistekst}{Входные данные. }
+  \newcommand{\valtekst}{Выходные данные. }
+  \newcommand{\suhttekst}{Общение. }
+  \newcommand{\ndetekst}{Пример. }
+  \newcommand{\hndtekst}{Оценивание. }
+  \newcommand{\mrktekst}{Примечание. }
+  \newcommand{\alatekst}{Подзадача}
+  % praegu enam ei kasutata, säilitatud ainult vanade materjalide jaoks
+  \newcommand{\alg}{Группа начинающих}
+\fi
+\ifeio@en
+  \newcommand{\eio}{Estonian Olympiad in Informatics}
+  \newcommand{\hv}{Practice Round }
+  \newcommand{\lv}{Open Competition }
+  \newcommand{\kv}{School Round }
+  \newcommand{\pv}{Regional Round }
+  \newcommand{\ev}{Preliminary Round }
+  \newcommand{\fv}{Final Round }
+  \newcommand{\vv}{Selection Round }
+  \newcommand{\lp}{Lecture Day }
+  \newcommand{\yld}{General Rules}
+  \newcommand{\juh}{Competition Rules}
+  \newcommand{\yle}{Tasks}
+  \newcommand{\lah}{Hints for Solutions}
+  \newcommand{\pqh}{Primary School Group}
+  \newcommand{\gym}{High School Group}
+  \newcommand{\eda}{Advanced Group}
+  \newcommand{\har}{For Practice}
+  \newcommand{\sisplk}{Input}
+  \newcommand{\valplk}{Output}
+  \newcommand{\sistekst}{Input. }
+  \newcommand{\valtekst}{Output. }
+  \newcommand{\suhttekst}{Interaction. }
+  \newcommand{\ndetekst}{Example. }
+  \newcommand{\hndtekst}{Grading. }
+  \newcommand{\mrktekst}{Remark. }
+  \newcommand{\alatekst}{Subtask}
+  % praegu enam ei kasutata, säilitatud ainult vanade materjalide jaoks
+  \newcommand{\alg}{Beginners' Group}
+\fi
+
+%%
+%% Lehekülje makett
+%%
+
+\setlength{\hoffset}{-1in}
+\setlength{\oddsidemargin}{25mm}
+\setlength{\evensidemargin}{25mm}
+\setlength{\textwidth}{\paperwidth}
+  \addtolength{\textwidth}{-\oddsidemargin}
+  \addtolength{\textwidth}{-\evensidemargin}
+
+\setlength{\voffset}{-1in}
+\setlength{\topmargin}{15mm}
+\setlength{\headheight}{10mm}
+\setlength{\headsep}{5mm}
+\setlength{\footskip}{15mm}
+\setlength{\textheight}{\paperheight}
+  \addtolength{\textheight}{-\topmargin}
+  \addtolength{\textheight}{-\headheight}
+  \addtolength{\textheight}{-\headsep}
+  \addtolength{\textheight}{-\footskip}
+  \addtolength{\textheight}{-15mm}
+
+%%
+%% Päised ja jalused
+%%
+
+\lhead{}
+\chead{}
+\rhead{}
+\renewcommand{\headrulewidth}{0pt}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{fancy}
+
+%%
+%% Põhitekst
+%%
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5\baselineskip}
+
+\newcommand{\plk}[1]{\vskip\baselineskip\par{\Large\bf#1}\par\nopagebreak}
+\newcommand{\alaplk}[1]{\vskip\baselineskip\par{\large\bf#1}\par\nopagebreak}
+
+\ifeio@et
+  \renewcommand{\le}{\leqslant}
+  \renewcommand{\ge}{\geqslant}
+\fi
+\ifeio@ru
+  \renewcommand{\le}{\leqslant}
+  \renewcommand{\ge}{\geqslant}
+  \newcommand{\gl}{\guillemotleft}
+  \newcommand{\gr}{\guillemotright}
+\fi
+
+%%
+%% Joonised
+%%
+
+\ifx\pdftexversion\undefined
+  \input{epsf}
+  \newcommand{\eps}[1]{\epsfbox{#1}}
+\else
+  %\input{supp-pdf}
+  \newcommand{\eps}[1]{\ensuremath{\convertMPtoPDF{#1}{1}{1}}}
+\fi
+
+%%
+%% Standardsest veidi tihedamad loetelud
+%%
+
+\newenvironment{xitem}{
+  \begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \vspace{-2\parskip}
+}{
+  \end{itemize}
+  \vspace{-\parskip}
+}
+
+\newenvironment{xenum}{
+  \begin{enumerate}
+  \setlength{\itemsep}{0pt}
+  \vspace{-2\parskip}
+}{
+  \end{enumerate}
+  \vspace{-\parskip}
+}
+
+\newenvironment{xquote}{
+  \begin{quote}
+  \vspace{-2\parskip}
+}{
+  \end{quote}
+  \vspace{-\parskip}
+}
+
+%%
+%% Keskkond ühe ürituse materjalide vormistamiseks
+%% 1 - Üldpealkiri (tavaliselt \eio)
+%% 2 - Ürituse nimi (\lv, \ev, \fv jne) + kuupäev
+%% 3 - Dokumendi liik (\yle, \juh jne)
+%% 4 - Rühm (\alg, \eda või tühi)
+%%
+
+\newenvironment{ol}[4]{
+  \lhead{\small#1\hfill\\#2\hfill}
+  \rhead{\small\hfill#3\\\hfill#4}
+  % kui hyperref on laetud, hakkab \pageref hüperlinke tegema
+  % selle asemele luuakse \pageref*, mis ei tee linke
+  % kui hyperref ei ole laetud, siis \pageref* ei eksisteeri
+  \rfoot{\small\thepage/\@ifundefined{hyperref}{\pageref{LastPage}}{\pageref*{LastPage}}}
+}{
+  \clearpage
+}
+
+%%
+%% Keskkond ühe salajaste testidega ülesande vormistamiseks
+%% 1 - Ülesande järjekorranumber
+%% 2 - Ülesande pealkiri (tõlgitakse)
+%% 3 - Ülesande lühinimi (ei tõlgita)
+%% 4 - Testi ajalimiit
+%% 5 - Ülesande väärtus
+%%
+
+\newenvironment{yl}[5]{
+  \vskip\baselineskip\par{\Large{\bf#1. #2} ({\tt#3})}\hfill\parbox[t]{3cm}{\hfill#4}\parbox[t]{3cm}{\hfill#5}\par
+  % Sisendi kirjeldus
+  \newcommand{\sis}{\textbf{\sistekst}}
+  % Väljundi kirjeldus
+  \newcommand{\val}{\textbf{\valtekst}}
+  % Suhtluse kirjeldus interaktiivses ülesandes
+  \newcommand{\suht}{\textbf{\suhttekst}}
+  % Sisendi/väljundi näide
+  % 1 - näite number; 2 - faili liik; 3 - veeru laius; 4 - veeru pealkiri
+  \newcommand{\nde@}[4]{\parbox[t]{##3}{##4\tt\parskip=0pt\topsep=0pt\partopsep=0pt\small\IfFileExists{./##2##1.txt}{\verbatiminput{./##2##1.txt}}{\verbatiminput{../##2/##2##1.txt}}}}
+  % Kaheveeruline näide
+  % 1 - näite number; 2 - sisendi veeru laius; 3 - väljundi veeru laius
+  \newcommand{\nde}[3][]{\par\parbox[t]{3cm}{\bf\ndetekst}\nde@{##1}{input}{##2}{\sisplk}\nde@{##1}{output}{##3}{\valplk}\vskip\parskip}
+  % Üheveeruline näide
+  % 1 - näite number; 2 - veeru laius
+  \newcommand{\ndex}[3][]{\par\parbox[t]{3cm}{\bf\ndetekst}\nde@{##1}{input}{##2}{\sisplk}\par\nobreak\parbox[t]{3cm}{\hfill}\nde@{##1}{output}{##2}{\valplk}\vskip\parskip}
+  % Näide ilma tekstita ``näide''
+  \newcommand{\ndey}[3][]{\par\nde@{##1}{input}{##2}{\sisplk}\nde@{##1}{output}{##3}{\valplk}\vskip\parskip}
+  % Märkus hindamise kohta
+  \newcommand{\hnd}{\textbf{\hndtekst}}
+  % Üldine märkus
+  \newcommand{\mrk}{\textbf{\mrktekst}}
+  % Joonis EPS-failist
+  \newcommand{\joon}[1]{\begin{center}\eps{../statement/figure.##1}\end{center}}
+}{
+  \par
+}
+
+%%
+%% Keskkond ühe avatud testidega ülesande vormistamiseks
+%% 1 - Ülesande järjekorranumber
+%% 2 - Ülesande pealkiri (tõlgitakse)
+%% 3 - Ülesande lühinimi (ei tõlgita)
+%% 4 - Ülesande väärtus
+%%
+
+\newenvironment{ylx}[4]{
+  \vskip\baselineskip\par{\Large{\bf#1. #2} ({\tt#3})}\hfill\parbox{3cm}{\hfill#4}\par
+  % Sisendi kirjeldus
+  \newcommand{\sis}{\textbf{\sistekst}}
+  % Väljundi kirjeldus
+  \newcommand{\val}{\textbf{\valtekst}}
+  % Sisendi/väljundi näide
+  % 1 - näite number; 2 - faili liik; 3 - veeru laius; 4 - veeru pealkiri
+  \newcommand{\nde@}[4]{\parbox[t]{##3}{##4\tt\parskip=0pt\topsep=0pt\partopsep=0pt\small\IfFileExists{./##2##1.txt}{\verbatiminput{./##2##1.txt}}{\verbatiminput{../##2/##2##1.txt}}}}
+  % Kaheveeruline näide
+  % 1 - näite number; 2 - sisendi veeru laius; 3 - väljundi veeru laius
+  \newcommand{\nde}[3][]{\par\parbox[t]{3cm}{\bf\ndetekst}\nde@{##1}{input}{##2}{\sisplk}\nde@{##1}{output}{##3}{\valplk}\vskip\parskip}
+  % Üheveeruline näide
+  % 1 - näite number; 2 - veeru laius
+  \newcommand{\ndex}[3][]{\par\parbox[t]{3cm}{\bf\ndetekst}\nde@{##1}{input}{##2}{\sisplk}\par\nobreak\parbox[t]{3cm}{\hfill}\nde@{##1}{output}{##2}{\valplk}\vskip\parskip}
+  % Ainult väljundi näide
+  % 1 - näite number; 2 - veeru laius
+  \newcommand{\ndev}[3][]{\par\parbox[t]{3cm}{\bf\ndetekst}\nde@{##1}{output}{##2}{\valplk}\vskip\parskip}
+  % Märkus hindamise kohta
+  \newcommand{\hnd}{\textbf{\hndtekst}}
+  % Üldine märkus
+  \newcommand{\mrk}{\textbf{\mrktekst}}
+  % Joonis EPS-failist
+  \newcommand{\joon}[1]{\begin{center}\eps{../statement/figure.##1}\end{center}}
+}{
+  \par
+}
+
+\endinput

@@ -1,0 +1,10 @@
+name: sokid
+title: Sokid
+time_limit: 1
+memory_limit: 256
+public_testcases: all
+infile: ''
+outfile: ''
+score_type: GroupSum
+score_mode: max_subtask
+score_precision: 2

@@ -1,0 +1,42 @@
+% Idee ja teostus: Heno Ivanov
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[et]{../../eio}
+
+\begin{document}
+\begin{ol}{\eio}{\ev 8.12.2024}{\yle}{}
+\begin{yl}{5}{Kingituste andmebaas}{baas}{5 sek / 10 sek}{60 punkti}
+
+Jõuluvanal on suur kingisoovide andmebaas. Iga lapse kohta on seal kirjas täpselt $M$ soovi. Iga soov on kirjas ühe väikestest ladina tähtedest koosneva sõnana, mille pikkus on $1$ kuni $100$ tähte.
+
+Jõuluvana palus Jukul teha andmebaasist hulga päringuid. Iga päring oli kujul ``leia kõik kingisoovijad, kelle mõni soov algab sõnega $S$''. Kahjuks unustas Juku päringuvastuste juurde kirja panna, millist konkreetset sõnet iga kord otsiti. Kirjuta Jukule programm, mis saab ühe päringu vastuse ja leiab pikima võimaliku sellele vastava $S$ väärtuse.
+
+Märkus: isikuandmete kaitseks on päringuvastustest eemaldatud kingisoovijate kontaktandmed.
+
+\sis Sisendi esimesel real on kaks tühikuga eraldatud täisarvu: iga lapse kingisoovide arv $M$ ja päringu vastuse ridade arv $N$ ($1 \le M \le 1\,000$, $1 \le N \le 100\,000$).
+
+Järgmisel $N$ real on igaühel täpselt $M$ tühikutega eraldatud sõna. Sisendi maksimaalne maht ühes testis on $64$~MB.
+
+\val Väljastada suurima võimaliku pikkusega otsisõna $S$, mis on kooskõlas päringu vastusega. Kui sobivaid otsisõnu on mitu, väljastada neist tähestiku järjekorras esimene. Võib eeldada, et vastus on mittetühi sõne.
+
+\ndex[0]{12cm}
+
+Päringu vastuse igal real on vähemalt üks sõna, mis algab tähtedega `\verb/pi/'. Pole ühtegi pikemat ega ka ühtegi teist kahetähelist sõnet, mis oleks igal real vähemalt ühe sõna alguseks. Näiteks sõne `\verb/pip/' ei sobi vastuseks, sest viimasel real pole ühtki selle sõnega algavat sõna.
+
+\ndex[1]{12cm}
+
+\hnd Selles ülesandes on testid jagatud gruppidesse. Iga grupi eest saavad punkte ainult need lahendused, mis läbivad \textbf{kõik} sellesse gruppi kuuluvad testid. Gruppides kehtivad järgmised lisatingimused:
+\begin{xenum}
+  \item (0 punkti) Näited.
+  \item (10 punkti) $M = 1$, $N \le 10$.
+  \item (10 punkti) $M = 2$, $N \le 10$.
+  \item (10 punkti) Sisendi maht ühes testis on kuni $4$~KB.
+  \item (15 punkti) Sisendi maht ühes testis on kuni $1$~MB.
+  \item (15 punkti) Lisapiirangud puuduvad.
+\end{xenum}
+
+Selles ülesandes on lahendustel lubatud tavapärase 256~MB asemel kasutada kuni 512~MB mälu.
+
+\end{yl}
+\end{ol}
+\end{document}
